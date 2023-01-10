@@ -1,0 +1,101 @@
+.box {
+  position: relative;
+  width: 380px;
+  background: #1c1c1c;
+  border-radius: 8px;
+}
+.login_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 50px 40px;
+}
+
+form h2 {
+  color: #45f3ff;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.inputbox {
+  position: relative;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.inputbox input {
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px;
+  background: transparent;
+  outline: none;
+  color: #1c1c1c;
+  font-size: 1em;
+  
+  letter-spacing: 0.05em;
+  border: none;
+  background: #45f3ff;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.inputbox span {
+  left: 0;
+  padding: 20px 10px 10px;
+  font-size: 1em;
+  color: #45f3ff;
+  letter-spacing: 0.05em;
+}
+form p {
+  margin: 10px 0;
+  color: #8f8f8f;
+  font-size: 1em;
+  text-align: start;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 11px 25px;
+  display: flex;
+  background: transparent;
+  color: #45f3ff;
+  border: 2px solid #45f3ff;
+  border-radius: 4px;
+  font-size: 1em;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+button:hover {
+  color: #1c1c1c;
+  background: #45f3ff;
+  transition: 0.5s;
+  box-shadow: #45f3ff 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  
+}
+.link {
+  color: #45f3ff;
+}
+.detail{
+  display: flex;
+  gap: 5px;
+}
+a {
+  text-decoration: none;
+}
+.inputbox select , .inputbox select option:checked{
+  padding:  10px 10px;
+  background: #45f3ff;
+  color: #1c1c1c;
+  border-radius: 4px;
+  outline: none;
+  font-weight: 700;
+}
+
