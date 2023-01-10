@@ -1,0 +1,52 @@
+.add-product-container {
+    width: 100vw;
+    /* height: 100vw; */
+    display: flex;
+    justify-content: center;
+}
+
+.add-product-page {
+    width: 80%;
+    height: fit-content;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;
+}
+
+.add-product-page .page-title {
+    text-align: center;
+}
+
+.add-product-form {
+    padding: 12px;
+}
+
+.product-image,
+.product-base-price,
+.auction-duration,
+.product-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-product-form label {
+    font-size: 16px;
+    margin-right: 12px;
+    font-weight: normal;
+}
+
+.add-product-form input {
+    padding: 8px;
+    border-style: none;
+    border-radius: 4px;
+    width: 280px;
+    height: 32px;
+    margin-top: 12px;
+}
+
+/* 
+.product-image #productImage {
+    background: gray;
+} */
+
+
+

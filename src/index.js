@@ -6,7 +6,9 @@ import ContextProvier from "./contextAPI/AuthContext";
 
 // import reportWebVitals from './reportWebVitals';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ContextProvier children={<App />} />
 );
+
