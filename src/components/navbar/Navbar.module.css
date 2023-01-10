@@ -1,0 +1,111 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 9vh;
+}
+.logo h2 {
+  position: relative;
+  font-size: 3vw;
+  color: #1c1c1c;
+  -webkit-text-stroke: 0.1vw #45f3ff;
+}
+
+.menu_list {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu_list li {
+  padding: 0 20px;
+}
+.menu_list li a  , .navbar_name{
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #ffff;
+  transition: 0.3s all ease-in-out;
+  position: relative;
+}
+.menu_list li a:hover,
+.menu_list .active a {
+  color: #45f3ff;
+}
+
+.navbar_img img{
+  width: 20%;
+  height: 20%;
+  border-radius: 50%;
+}
+.menu_list li a:hover::after,
+.menu_list .active a::after {
+  content: "";
+  width: 40%;
+  height: 2px;
+  background: #45f3ff;
+  position: absolute;
+  bottom: -4px;
+  left: 0px;
+}
+.humberger {
+  display: none;
+  color: #ffff;
+}
+@media screen and (max-width: 768px) {
+  .menu_list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top: 90px;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background: #1c1c1c;
+    color: #45f3ff;
+    padding: 40px 0 0 10px;
+  }
+  .menu_list_active li {
+    margin-bottom: 25px;
+  }
+  .humberger {
+    display: block;
+  }
+  .menu_list_active li a {
+    font-size: 18px;
+    cursor: pointer;
+    color: #ffff;
+  }
+  .menu_list_active li a:hover,
+  .menu_list_active .active a {
+    color: #45f3ff;
+  }
+  .menu_list_active li a:hover::after,
+  .menu_list_active .active a::after {
+    content: "";
+    width: 40%;
+    height: 2px;
+    background: #45f3ff;
+    position: absolute;
+    bottom: -4px;
+    left: 0px;
+  }
+  .menu_list_active {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top: 90px;
+    right: 0px;
+    width: 300px;
+    height: 100vh;
+    background: #1c1c1c;
+    padding: 40px 0 0 10px;
+  }
+}
