@@ -1,0 +1,54 @@
+.card {
+    height: fit-content;
+    padding: 8px;
+    border: 1px solid rgb(209, 209, 209);
+    border-radius: 4px;
+}
+
+.product-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.current-bid{
+    display: flex;
+    gap: 4px;
+} 
+.current-bid .price-label,
+.location-label
+{
+    color: grey;
+}
+
+.current-bid .amount {
+    color: red;
+}
+
+.image-container img{
+    width: 240px;
+    height: 160px;
+    border-radius: 4px;
+}
+
+
+.card  .view-details-button {
+    cursor: pointer;
+    margin-top: 12px;
+    width: 120px;
+    height: 32px;
+    border-radius: 4px;
+    border-style: none;
+    background-color: rgb(46, 130, 255);
+    color: white;
+}
+
+.card .location {
+    display: flex;
+    gap: 4px;
+
+}
+.card .pin-location {
+    font-weight: lighter;
+    color: grey;
+}
+

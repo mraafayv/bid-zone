@@ -1,0 +1,22 @@
+.popular-products-container {
+    width: 100vw;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+}
+
+.popular-section {
+    width: 80%;
+    /* border: 1px solid; */
+}
+
+.popular-section h1 {
+    text-align: center;
+    margin: 16px;
+}
+
+.carousel {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 36px;
+}
