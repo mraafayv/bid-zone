@@ -1,0 +1,37 @@
+.timer {
+    margin: 16px 0 8px 0;
+    display: flex;
+    gap: 4px;
+}
+
+.timer-label {
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+
+.days-label,
+.hours-label,
+.minutes-label,
+.seconds-label {
+    font-size: 8px;
+    color: black;
+}
+
+
+.timer .days,
+.timer .hours, 
+.timer .minutes,
+.timer .seconds{
+    color: grey;
+}
+
+.timer .days,
+.timer .hours, 
+.timer .minutes,
+.timer .seconds{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
