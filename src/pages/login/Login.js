@@ -40,7 +40,7 @@ const Login = () => {
               </Link>
             </p>
 
-            {!isPending && <button>Login</button>}
+            {!isPending && <button className="login-button">Login</button>}
             {isPending && <button>loading......</button>}
             {error && <p>{error}</p>}
           </form>

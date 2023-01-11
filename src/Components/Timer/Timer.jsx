@@ -1,6 +1,10 @@
 import "./Timer.css";
 
 export default function Timer() {
+
+
+  
+
   return (
     <div className="timer">
       <div className="timer-label">Ends In:</div>

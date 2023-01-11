@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signup/SignUp";
 import Home from './pages/Home/Home';
-import About from "./components/about/About";
-import Profile from "./components/profile/Profile";
-import Auction from "./components/auction/Auction";
+import About from "./pages/about/About";
+import Profile from "./pages/profile/Profile";
+import Auction from "./pages/auction/Auction";
 import AddProduct from './pages/AddProduct/AddProduct'
 
 
@@ -22,6 +22,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/auction" element={<Auction />} />
+          <Route path="/addProduct" element={<AddProduct />} />
 
         </Routes>
       </BrowserRouter>

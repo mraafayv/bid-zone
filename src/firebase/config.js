@@ -29,10 +29,9 @@ const storage = getStorage(app);
 // const dbRef = collection(db, "userInformation");
 export {
   auth,
-
   addDoc,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   storage,
-  db,
+  db
 };
