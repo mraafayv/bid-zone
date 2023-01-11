@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 import styles from "./Navbar.module.css";
+import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
-  const [getUser, setGetUser] = useState("");
+  const [isHovering, setIsHovering] = useState(false);
+  const auth = getAuth();
+  const user = auth.currentUser;
+  var { localUser, setLocalUser } = useAuth();
+  const navigate = useNavigate();
+
+  console.log("localUserNavbar", localUser);
   useEffect(() => {
-    let users = localStorage.getItem("user");
-    var localAuth = JSON.parse(users);
-    setGetUser(localAuth);
-  }, []);
+    if (user) {
+      console.log("run", user.displayName);
+
+      // console.log("run", localUser.displayName);
+    }
+  }, [user]);
   const handleClick = () => {
     if (isClick) {
       setIsClick(false);
@@ -17,43 +29,107 @@ const Navbar = () => {
       setIsClick(true);
     }
   };
+  const handleLogin = () => {
+    navigate("/login");
+  };
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("successfully logout");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
-      <nav>
+      {user && (
+        <nav>
+          <div className={styles.logo}>
+            <h2>BidZone</h2>
+          </div>
+          <div>
+            <ul
+              className={isClick ? styles.menu_list_active : styles.menu_list}
+            >
+              <li className={styles.active}>
+                <Link to="/"> Home </Link>
+              </li>
+              <li className={styles.menu_list_item}>
+                <Link to="/auction">Auction</Link>
+              </li>
 
-        <div className={styles.logo}>
-          <h2>BidZone</h2>
-        </div>
-        <div>
-          <ul className={isClick ? styles.menu_list_active : styles.menu_list}>
-            <li className={styles.active}>
-              <Link to="/"> Home </Link>
-            </li>
-            <li>
-              <Link to="/auction">Auction</Link>
-            </li>
-            <li>
-              <Link to="/about">About Us </Link>
-            </li>
-            <li>
-              <Link to="/login">Login </Link>
-            </li>
-            {getUser &&  <li className={styles.navbar_name}>
-              <p>{getUser.displayName}</p>
-            </li>}
-            {getUser &&  <li className={styles.navbar_img}>
-              <img src={getUser.photoURL} alt="" />
-            </li>}
-           
-          </ul>
-        </div>
-        <div className={styles.humberger}>
-          <i
-            className={!isClick ? "fa-solid fa-bars" : "fa-solid fa-xmark"}
-            onClick={handleClick}
-          ></i>
-        </div>
-      </nav>
+              <li className={styles.navbar_name}>
+                <p>{user.displayName}</p>
+              </li>
+
+              <li
+                className={styles.menu_list_item_img}
+                onMouseOver={() => setIsHovering(true)}
+                onMouseOut={() => setIsHovering(false)}
+              >
+                <div className={styles.navbar_img}>
+                  <img src={user.photoURL} alt="" />
+                  <ul
+                    className={
+                      isHovering ? styles.drop_down_hoverOver : styles.drop_down
+                    }
+                  >
+                    <li className={styles.sub_item}>
+                      <p>
+                        <Link to="/profile"> My Auctions </Link>
+                      </p>
+                    </li>
+                    <li className={styles.sub_item}>
+                      <p>
+                        <Link to="/profile"> Update Profile </Link>
+                      </p>
+                    </li>
+                    <li className={styles.sub_item} onClick={logout}>
+                      <p>Logout</p>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.humberger}>
+            <i
+              className={!isClick ? "fa-solid fa-bars" : "fa-solid fa-xmark"}
+              onClick={handleClick}
+            ></i>
+          </div>
+        </nav>
+      )}
+      {!user && (
+        <nav>
+          <div className={styles.logo}>
+            <h2>BidZone</h2>
+          </div>
+          <div>
+            <ul
+              className={isClick ? styles.menu_list_active : styles.menu_list}
+            >
+              <li className={styles.active}>
+                <Link to="/"> Home </Link>
+              </li>
+              <li className={styles.menu_list_item}>
+                <Link to="/auction">Auction</Link>
+              </li>
+
+              <li className={styles.login_btn}>
+                <button onClick={handleLogin}>Login</button>
+              </li>
+            </ul>
+          </div>
+          <div className={styles.humberger}>
+            <i
+              className={!isClick ? "fa-solid fa-bars" : "fa-solid fa-xmark"}
+              onClick={handleClick}
+            ></i>
+          </div>
+        </nav>
+      )}
     </>
   );
 };

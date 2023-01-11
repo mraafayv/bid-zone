@@ -1,0 +1,34 @@
+.card_container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  background-color: #f2f6fc;
+  color: #69707a;
+}
+.card {
+
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.img_account_profile{
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50% 
+
+}
+
+
+.card .card_header {
+  font-weight: 500;
+}
+.card_header:first-child {
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+.card_header {
+  padding: 1rem 1.35rem;
+  margin-bottom: 0;
+  background-color: rgba(33, 40, 50, 0.03);
+  border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.card_form {
+  max-width: 70%;
+}

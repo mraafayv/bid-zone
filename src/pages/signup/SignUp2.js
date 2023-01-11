@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../../hooks/useSignup";
-import { useSetUploadImage } from "../../hooks/useSetUploadImage";
-import { useGetUploadImage } from "../../hooks/useGetUploadImage";
-import {  useNavigate } from "react-router-dom";
-
+import { useSignup2 } from "../../hooks/useSignup2";
+import { useNavigate } from "react-router-dom";
 import styles from "../login/Login.module.css";
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  dbRef,
-  setDoc,
-  storage,
-  db,
-} from "../../firebase/config";
-import { useFireStore } from "../../hooks/useFireStore";
-import { useAuth } from "../../hooks/useAuth";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
 import {
   ref,
   uploadBytes,
@@ -24,59 +13,45 @@ import {
   getDownloadURL,
   uploadBytesResumable,
 } from "firebase/storage";
-const SignUp = () => {
- const navigate = useNavigate()
-
-  const [user, setUser] = useState({
+const SignUp2 = () => {
+    const auth = getAuth();
+  const user = auth.currentUser;
+  const navigate = useNavigate();
+  const [data, setData] = useState({
     username: "",
     email: "",
     password: "",
-    userType: "",
+    userType: "Seller",
   });
-  var { localUser, setLocalUser } = useAuth();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("Seller");
   const [imageFile, setImageFile] = useState(null);
-  const [percent, setPercent] = useState(0);
   const [url, setUrl] = useState("");
-
   const storage = getStorage();
   const listRef = ref(storage, "images");
-  const { signup, error, isPending, response } = useSignup();
+  const { signup, error, isPending } = useSignup2();
 
   useEffect(() => {
     if (url) {
-      console.log("url" , url)
-      signup(
-        email,
-        password,
-        username,
-        userType,
-        url,
-        setUsername,
-        setEmail,
-        setPassword,
-        setUserType
-      );
-      
+      signup(data, url, setData, setUrl);
+    console.log("user2", user)
+    if(user!==null)
+    {
+     navigate("/");
+
     }
-  }, [url]);
-  const { imageIsPending, imageError, uploadImage, singleImage } =
-    useSetUploadImage();
 
-  const handleFiles = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-  const handleImage = (e) => {
-    e.preventDefault();
+    
 
-    uploadImage(imageFile);
+    
+    }
+  }, [url, user]);
+  const handleEvent = (e) => {
+    let inputs = { [e.target.name]: e.target.value };
+    setData({ ...data, ...inputs });
   };
-  var url2;
+
   const handleSignup = async (e) => {
     e.preventDefault();
+
 
     const res = await listAll(listRef);
     const storageRef = ref(storage, `images/${imageFile.name}`);
@@ -87,7 +62,6 @@ const SignUp = () => {
         const percent = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         ); // update progress
-        setPercent(percent);
       },
       (err) => console.log(err),
       () => {
@@ -97,8 +71,6 @@ const SignUp = () => {
         });
       }
     );
-   
-    
   };
 
   return (
@@ -111,9 +83,9 @@ const SignUp = () => {
               <span>Your Role</span>
               <select
                 name="usertype"
-                value={userType}
+                value={data.userType}
                 required
-                onChange={(e) => setUserType(e.target.value)}
+                onChange={handleEvent}
               >
                 <option value="Seller">I am Seller</option>
                 <option value="Bidder">I am Bidder</option>
@@ -121,15 +93,18 @@ const SignUp = () => {
             </div>
             <div className={styles.inputbox}>
               <span>upload picture</span>
-              <input type="file" onChange={handleFiles} />
-              {/* <button onClick={handleImage}>upload image</button> */}
+              <input
+                type="file"
+                onChange={(e) => setImageFile(e.target.files[0])}
+                name="file"
+              />
             </div>
             <div className={styles.inputbox}>
               <span>Username</span>
               <input
                 type="text"
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                onChange={handleEvent}
+                value={data.username}
                 name="username"
               />
             </div>
@@ -137,8 +112,8 @@ const SignUp = () => {
               <span>Email</span>
               <input
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={handleEvent}
+                value={data.email}
                 name="email"
               />
             </div>
@@ -146,8 +121,8 @@ const SignUp = () => {
               <span>Password</span>
               <input
                 type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={handleEvent}
+                value={data.password}
                 name="password"
               />
             </div>
@@ -168,4 +143,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp2;

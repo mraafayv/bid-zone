@@ -2,16 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useSignin } from "../../hooks/useSignin";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signin, error, isPending } = useSignin();
+  const navigate = useNavigate();
 
   const handleSignin = (e) => {
     e.preventDefault();
     signin(email, password);
     setEmail("")
     setPassword("")
+    navigate("/");
+
 
   };
 
@@ -40,8 +45,8 @@ const Login = () => {
               </Link>
             </p>
 
-            {!isPending && <button>Login</button>}
-            {isPending && <button>loading......</button>}
+            {!isPending && <button className={styles.login_btn}>Login</button>}
+            {isPending && <button className={styles.login_btn}>loading......</button>}
             {error && <p>{error}</p>}
           </form>
         </div>
