@@ -7,11 +7,13 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll } from "
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from "../../firebase/config";
 
+import uuid from 'react-uuid';
+
 
 export default function AddProduct() {
 
   const user = JSON.parse(localStorage.getItem('user'))
-  console.log(user.uid)
+  // console.log(user.uid)
 
   const [imageFile, setImageFile] = useState(null);
   const [percent, setPercent] = useState(0);
@@ -70,10 +72,11 @@ export default function AddProduct() {
 const resetForm = () => {
   setBasePrice("")
   setDuration("")
-  setImageFile("")
+  // setImageFile("")
   setProdCategory("")
   setProdDescription("")
   setProdName("")
+  setProdImage("")
 }
   
 
@@ -83,8 +86,11 @@ const resetForm = () => {
   //  await uploadImage();
 
     await uploadImage().then(function (){
+
+      console.log("image url: ",url);
       const docRef = addDoc(collection(db, "products"), {
         ownerID: user.uid,
+        prodID: uuid(),
         prodName: prodName,
         prodDescription: prodDescription,
         prodCategory: prodCategory,
@@ -99,7 +105,7 @@ const resetForm = () => {
     });
 
 
-  
+    resetForm()
   }
 
 
@@ -122,6 +128,7 @@ const resetForm = () => {
                 cols="20"
                 rows="10"
                 required
+                
                 onChange={(e) => setProdDescription(e.target.value)}
               ></textarea>
             </div>
@@ -137,7 +144,7 @@ const resetForm = () => {
             </div>
             <div className="product-image">
               <label htmlFor="product-image">Product Photos</label>
-              <input type="file" name="myImage" accept="image/png, image/jpg, image/jpeg" onChange={(e) => {setImageFile(e.target.files[0])}}/>
+              <input type="file" name="myImage" accept="image/png, image/jpg, image/jpeg"  onChange={(e) => {setImageFile(e.target.files[0])}}/>
            {/* <button onClick={uploadImage}>upload photo</button> */}
            
             </div>
@@ -152,6 +159,7 @@ const resetForm = () => {
                 name="duration"
                 id="duration"
                 required
+               
                 onChange={(e) => setDuration(e.target.value)}
               />
             </div>

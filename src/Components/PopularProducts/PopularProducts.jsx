@@ -8,8 +8,8 @@ import { useEffect, useState } from 'react';
 
 export default function PopularProducts() {
 
-  // const [cardData, setCardData] = useState({})
-  const cardsData = [];
+  const [cardsData, setCardsData] = useState([])
+  // const cardsData = [];
   
 
  useEffect(() => {
@@ -18,13 +18,15 @@ export default function PopularProducts() {
     const querySnapshot = await getDocs(collection(db, "products"));
     querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    cardsData.push(Object.assign(doc.data(), {prodID: doc.id}))
-    console.log(doc.id, " => ", doc.data());
+    setCardsData(prevData => [...prevData, doc.data()])
+    
+    // console.log(doc.id, " => ", doc.data());
   });
-  }
+}
 
+// setCardData(cardsData)
 
-  loadData();
+loadData();
 
 }, [])
 
@@ -37,11 +39,10 @@ export default function PopularProducts() {
         {console.log(cardsData)}
 
           
-          {cardsData.map(card => {
-            console.log("CARD",card)
-            return <Card prodName={card.prodName} prodImage={card.prodImage}/>
-            // return (<h1>Card</h1>)
-          })} 
+         {cardsData.map(card => {
+          return <Card data={card}/>
+         })}
+
         {/* <Card /> 
         <Card /> 
         <Card /> 

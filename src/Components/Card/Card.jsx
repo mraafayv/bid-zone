@@ -2,17 +2,18 @@ import './Card.css'
 import ProductImage from '../../assets/product.jpeg'
 import Timer from '../Timer/Timer'
 
-export default function Card({props}) {
+export default function Card({data}) {
     
+    // console.log(props)
 
   return (
     <div className='card'>
         <div className="image-container">
-            <img src={props.prodImage} alt="product" />
+            <img src={data.prodImage} alt="product" />
         </div>
         <div className="card-content">
             <div className="product-name">
-                <h3>{props.prodName}</h3>
+                <h3>{data.prodName}</h3>
             </div>
             <div className="current-bid">
                 <h4 className='price-label'>Current Bid:</h4>
