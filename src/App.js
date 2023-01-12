@@ -4,7 +4,6 @@ import Login from "./pages/login/Login";
 import Home from "./pages/Home/Home";
 import Profile from "./pages/profile/Profile";
 import Auction from "./pages/auction/Auction";
-import SignUp2 from "./pages/signup/SignUp2";
 import SignUp3 from "./pages/signup/Signup3";
 // import AddProduct from './pages/AddProduct/AddProduct'
 

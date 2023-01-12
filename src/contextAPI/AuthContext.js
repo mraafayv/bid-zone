@@ -21,7 +21,8 @@ const user = auth.currentUser;
         console.log("authUser" , user)
         setLocalUser(user);
       } else {
-        alert("not logged in");
+        console.log("not logged in")
+        setLocalUser(null)
       }
     });
   }, [localUser]);

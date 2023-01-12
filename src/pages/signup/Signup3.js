@@ -34,6 +34,7 @@ const SignUp3 = () => {
     userType: "Seller",
   });
   const [imageFile, setImageFile] = useState(null);
+  const [error, setError] = useState(null)
   const [url, setUrl] = useState("");
   const storage = getStorage();
   const listRef = ref(storage, "images");
@@ -45,8 +46,8 @@ const SignUp3 = () => {
   const uploadImage = async (e) => {
     e.preventDefault();
     console.log("assaf");
-    const res = await listAll(listRef);
-    const storageRef = ref(storage, `images/${imageFile.name}`);
+    // const res = await listAll(listRef);
+    const storageRef = ref(storage, `images/profileImages/${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
     uploadTask.on(
       "state_changed",
@@ -60,9 +61,9 @@ const SignUp3 = () => {
       (err) => console.log(err),
       () => {
         // download url
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log("url: ", url);
-          setUrl(url);
+        getDownloadURL(uploadTask.snapshot.ref).then((updatedURL) => {
+          console.log("url: ", updatedURL);
+          setUrl(updatedURL);
         });
       }
     );
@@ -103,6 +104,7 @@ const SignUp3 = () => {
         })
         .catch((error) => {
           console.log("updatednot", error);
+          
         });
 
       setData({
@@ -114,6 +116,7 @@ const SignUp3 = () => {
       setUrl("");
     } catch (error) {
       console.log(error.message);
+      setError(error.message)
     }
   };
 
@@ -184,9 +187,8 @@ const SignUp3 = () => {
                 Sign Up
               </button>
             )}
-            {/* {!isPending && <button onClick={handleSignup}>Sign Up</button>}
-            {isPending && <button>loading......</button>}
-            {error && <p>{error}</p>} */}
+           
+            {error && <p>{error}</p>}
           </form>
         </div>
       </div>

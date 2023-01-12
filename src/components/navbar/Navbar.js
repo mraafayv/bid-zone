@@ -21,7 +21,7 @@ const Navbar = () => {
 
       // console.log("run", localUser.displayName);
     }
-  }, [user]);
+  }, [localUser]);
   const handleClick = () => {
     if (isClick) {
       setIsClick(false);
@@ -36,6 +36,7 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         console.log("successfully logout");
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +44,7 @@ const Navbar = () => {
   };
   return (
     <>
-      {user && (
+      {localUser && (
         <nav>
           <div className={styles.logo}>
             <h2>BidZone</h2>
@@ -60,7 +61,7 @@ const Navbar = () => {
               </li>
 
               <li className={styles.navbar_name}>
-                <p>{user.displayName}</p>
+                <p>{localUser.displayName}</p>
               </li>
 
               <li
@@ -69,7 +70,7 @@ const Navbar = () => {
                 onMouseOut={() => setIsHovering(false)}
               >
                 <div className={styles.navbar_img}>
-                  <img src={user.photoURL} alt="" />
+                  <img src={localUser.photoURL} alt="" />
                   <ul
                     className={
                       isHovering ? styles.drop_down_hoverOver : styles.drop_down
@@ -101,7 +102,7 @@ const Navbar = () => {
           </div>
         </nav>
       )}
-      {!user && (
+      {!localUser && (
         <nav>
           <div className={styles.logo}>
             <h2>BidZone</h2>
