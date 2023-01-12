@@ -9,6 +9,8 @@ import ContextProvier from "./contextAPI/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ContextProvier children={<App />} />
+  <React.StrictMode>
+    <ContextProvier children={<App />} />
+  </React.StrictMode>
 );
 

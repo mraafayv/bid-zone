@@ -21,7 +21,7 @@ export const useGetUploadImage = () => {
   var fetchUrl;
   useEffect(() => {
     userData();
-    console.log(getImages, singleImage);
+    // console.log(getImages, singleImage);
   }, []);
   const userData = async () => {
     const res = await listAll(listRef);

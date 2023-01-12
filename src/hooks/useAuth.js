@@ -6,7 +6,7 @@ export const useAuth = () => {
   if (context === undefined) {
     throw new Error("useTheme() must be used inside a ThemeProvider");
   }
-  console.log("context: " , context)
+  
   return context;
 };
 

@@ -5,6 +5,8 @@ nav {
   padding: 20px 80px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 9vh;
+  background: #23242a;
+  position: relative;
 }
 .logo h2 {
   position: relative;
@@ -13,33 +15,115 @@ nav {
   -webkit-text-stroke: 0.1vw #45f3ff;
 }
 
+.drop_down {
+  background-color: #fff;
+  padding: 0 3rem;
+  border-radius: 0.625rem;
+  position: absolute;
+  top: 10vh;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  right: 23px;
+}
+.drop_down_hoverOver {
+  background-color: #fff;
+  padding: 0 3rem;
+  border-radius: 0.625rem;
+  position: absolute;
+  top: 9vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  right: 23px;
+}
+.sub_item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.725rem;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+}
+.sub_item p a:hover , .sub_item p:hover {
+  color: #000;
+  cursor: pointer;
+}
+.sub_item p a,
+.sub_item p {
+  font-size: 0.85rem;
+  color: #888888;
+  font-weight: 500;
+  margin: 0.4rem 0;
+  flex: 1;
+}
 .menu_list {
   display: flex;
   list-style: none;
   justify-content: space-between;
   align-items: center;
 }
-.menu_list li {
+.login_btn button {
+  padding: 8px 22px;
+  background: transparent;
+  color: #fff;
+
+  border: 2px solid #45f3ff;
+  border-radius: 4px;
+  font-size: 1em;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+
+.login_btn button:hover {
+  background: #45f3ff;
+  transition: 0.3s;
+  color: #1c1c1c;
+}
+
+.menu_list_item,
+.navbar_name {
   padding: 0 20px;
 }
-.menu_list li a  , .navbar_name{
+.menu_list_item_img {
+  padding: 0 20px;
+  height: 9vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu_list_item a,
+.active a,
+.login_btn a,
+.navbar_name {
   font-size: 1.05em;
   font-weight: 600;
   color: rgb(7, 7, 7);
   transition: 0.3s all ease-in-out;
   position: relative;
 }
-.menu_list li a:hover,
+.navbar_img {
+  cursor: pointer;
+}
+.menu_list .active {
+  padding: 0 20px;
+}
+.menu_list .menu_list_item a:hover,
 .menu_list .active a {
   color: #45f3ff;
 }
 
-.navbar_img img{
-  width: 20%;
-  height: 20%;
+.menu_list li .navbar_img img {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  border: 1px solid;
 }
-.menu_list li a:hover::after,
+.menu_list .menu_list_item a:hover::after,
 .menu_list .active a::after {
   content: "";
   width: 40%;

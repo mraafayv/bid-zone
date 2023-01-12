@@ -60,8 +60,7 @@ form p {
   text-align: start;
 }
 
-.login-button,
-.signup-button {
+.login_btn {
   border: none;
   outline: none;
   padding: 11px 25px;
@@ -74,8 +73,7 @@ form p {
   letter-spacing: 0.03em;
   font-weight: 600;
 }
-.login-button:hover,
-.signup-button:hover {
+.login_btn:hover {
   color: #1c1c1c;
   background: #45f3ff;
   transition: 0.5s;

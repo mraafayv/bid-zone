@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import { useSignin } from "../../hooks/useSignin";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+
 const Login = () => {
+  const {localUser} = useAuth();
+  console.log(localUser)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signin, error, isPending } = useSignin();
+  const navigate = useNavigate();
+
+  
+useEffect(() => {
+ if(localUser)
+ {
+  navigate("/")
+ }
+ 
+}, [localUser])
 
   const handleSignin = (e) => {
     e.preventDefault();
     signin(email, password);
-    setEmail("")
-    setPassword("")
+    setEmail("");
+    setPassword("");
 
+    // navigate("/");
   };
 
   return (
@@ -23,7 +39,11 @@ const Login = () => {
             <h2>Sign in</h2>
             <div className={styles.inputbox}>
               <span>Email</span>
-              <input type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
             </div>
             <div className={styles.inputbox}>
               <span>Password</span>
@@ -40,8 +60,10 @@ const Login = () => {
               </Link>
             </p>
 
-            {!isPending && <button className="login-button">Login</button>}
-            {isPending && <button>loading......</button>}
+            {!isPending && <button className={styles.login_btn}>Login</button>}
+            {isPending && (
+              <button className={styles.login_btn}>loading......</button>
+            )}
             {error && <p>{error}</p>}
           </form>
         </div>
