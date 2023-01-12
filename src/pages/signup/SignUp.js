@@ -158,7 +158,7 @@ const SignUp = () => {
               </Link>
             </p>
 
-            {!isPending && <button onClick={handleSignup}>Sign Up</button>}
+            {!isPending && <button className="signup-button" onClick={handleSignup}>Sign Up</button>}
             {isPending && <button>loading......</button>}
             {error && <p>{error}</p>}
           </form>
