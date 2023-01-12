@@ -3,7 +3,7 @@ import "./Categories.css";
 
 export default function Categories() {
 
-  const categoryOptions = ["Cars", "Art", "Coins", "Watches", "Sneakers"];
+  const categoryOptions = ["Cars", "Collectibles", "Electronics", "Watches", "Sneakers"];
 
 
   return (
