@@ -1,6 +1,6 @@
 .card_container {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   width: 100%;
   background-color: #f2f6fc;
   color: #69707a;
@@ -16,7 +16,7 @@
   font-size: 1rem;
   text-align: center;
 }
-.card ul li{
+.card ul li {
   margin-top: 10px;
   cursor: pointer;
   font-weight: 500;
@@ -42,7 +42,6 @@
 }
 .card_form {
   max-width: 70%;
-  
 }
 .card_body form {
   display: flex;
@@ -50,6 +49,9 @@
   align-items: flex-start;
   padding: 50px 40px;
   gap: 20px;
+}
+.profile_menu button {
+  cursor: pointer;
 }
 .inputbox {
   position: relative;
@@ -81,7 +83,7 @@
   font-weight: 500;
   letter-spacing: 0.05em;
 }
-.update_btn{
+.update_btn {
   border: none;
   outline: none;
   padding: 11px 25px;
@@ -99,5 +101,7 @@
   background: #45f3ff;
   transition: 0.5s;
   box-shadow: #45f3ff 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.auctions_card{
   
 }

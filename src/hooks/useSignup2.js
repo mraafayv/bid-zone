@@ -48,6 +48,7 @@ export const useSignup2 = () => {
         password: data.password,
         displayName: data.username,
         userType: data.userType,
+        userDetail:data.userDetail,
         url,
       });
 
@@ -57,6 +58,7 @@ export const useSignup2 = () => {
         username: "",
         email: "",
         password: "",
+        userDetail:"",
         userType: "Seller",
       });
       setUrl("");

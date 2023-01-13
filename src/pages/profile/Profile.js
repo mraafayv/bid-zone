@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Card from "../../Components/Card/Card";
 
 import {
   ref,
@@ -15,8 +16,10 @@ import {
   updateProfile,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  signOut
+  signOut,
 } from "firebase/auth";
+import Slider from "react-slick";
+
 // import styles from "./Profile.module.css";
 import styles from "./Profile.module.css";
 import { db, signInWithEmailAndPassword } from "../../firebase/config";
@@ -30,6 +33,44 @@ import {
 } from "firebase/firestore";
 
 const Profile = () => {
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "black" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: "block", background: "black" }}
+        onClick={onClick}
+      />
+    );
+  }
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    
+    // beforeChange: function(currentSlide, nextSlide) {
+    //   console.log("before change", currentSlide, nextSlide);
+    // },
+    // afterChange: function(currentSlide) {
+    //   console.log("after change", currentSlide);
+    // },
+    
+  };
   const auth = getAuth();
   const storage = getStorage();
   const navigate = useNavigate();
@@ -41,7 +82,9 @@ const Profile = () => {
   var { localUser } = useAuth();
   const [authUser, setAuthUser] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [password, setPassword] = useState();
+  const [blockOption, setBlockOption] = useState(null);
   const [data, setData] = useState({
     password: "",
   });
@@ -51,11 +94,23 @@ const Profile = () => {
       setId(localUser.uid);
       getProfile(localUser.uid);
       setAuthUser(localUser);
+      showUserProduct(localUser.uid);
     }
   }, [localUser]);
   const handleEvent = (e) => {
     let inputs = { [e.target.name]: e.target.value };
     setData({ ...data, ...inputs });
+  };
+  const changePasswordBlock = (e) => {
+    const id = e.target.getAttribute("id");
+    console.log("id", id);
+    if (id === "changePassword") {
+      setBlockOption("changePassword");
+    } else if (id === "auctions") {
+      setBlockOption("auctions");
+    } else if (id === "profileDetails") {
+      setBlockOption("profileDetails");
+    }
   };
   const uploadImage = async (e) => {
     e.preventDefault();
@@ -143,7 +198,7 @@ const Profile = () => {
                     }
                   });
                 },
-               
+
                 (error) => {
                   console.log(error);
                 }
@@ -166,8 +221,6 @@ const Profile = () => {
           alert(error);
         });
     }
-
-   
   };
   const getProfile = async (id) => {
     const querySnapshot = await getDocs(collection(db, "userInformation"));
@@ -181,14 +234,26 @@ const Profile = () => {
       }
     });
   };
-  const handleChange = () => {};
+  const showUserProduct = async (id) => {
+    const tempCards = [];
+
+    const querySnapshot = await getDocs(collection(db, "products"));
+    querySnapshot.forEach((doc) => {
+      if (doc.data().ownerID === id) {
+        tempCards.push(doc.data());
+      }
+    });
+    setFilteredProducts(tempCards);
+
+    console.log("filteredData", filteredProducts);
+  };
 
   return (
     <>
       {getUser && (
         <>
-         {/* --- header start --- */}
-        
+          {/* --- header start --- */}
+
           <div className={styles.card_container}>
             <div className={styles.card}>
               <div className={styles.card_header}>Profile Picture</div>
@@ -205,31 +270,67 @@ const Profile = () => {
 
                 <button onClick={uploadImage}>upload</button>
               </div>
-              <ul>
-                <li>Change Password</li>
-                <li>My Auctions</li>
-                <li>Details</li>
-            </ul>
+              <ul className={styles.profile_menu}>
+                <li>
+                  <button onClick={changePasswordBlock} id="changePassword">
+                    Change Password
+                  </button>
+                </li>
+                <li>
+                  <button onClick={changePasswordBlock} id="auctions">
+                    My Auctions
+                  </button>
+                </li>
+                <li>
+                  <button onClick={changePasswordBlock} id="profileDetails">
+                    Details
+                  </button>
+                </li>
+              </ul>
             </div>
             {/* Accounts detail card */}
-            <div className={styles.card_form}>
-              <div className={styles.card}>
-                <div class={styles.card_header}>Account Details</div>
-                <div className={styles.card_body}>
-                  <form>
-                    <div className={styles.inputbox}>
-                      <span>Password</span>
-                      <input
-                        type="text"
-                        onChange={(e) => setPassword(e.target.value)}
-                        defaultValue={getUser.password}
-                        name="password"
-                      />
-                    </div>
-                    <button className={styles.update_btn} onClick={updateData}>Update</button>
-                  </form>
+
+            {/* change password */}
+            {blockOption === null && <h3>this is my head</h3>}
+            {blockOption === "changePassword" && (
+              <div className={styles.card_form}>
+                <div className={styles.card}>
+                  <div class={styles.card_header}>Account Details</div>
+                  <div className={styles.card_body}>
+                    <form>
+                      <div className={styles.inputbox}>
+                        <span>Password</span>
+                        <input
+                          type="text"
+                          onChange={(e) => setPassword(e.target.value)}
+                          defaultValue={getUser.password}
+                          name="password"
+                        />
+                      </div>
+                      <button
+                        className={styles.update_btn}
+                        onClick={updateData}
+                      >
+                        Update
+                      </button>
+                    </form>
+                  </div>
                 </div>
               </div>
+            )}
+
+            {/* auctions */}
+            <div className={styles.auctions_card}>
+            {blockOption === "auctions" && (
+             
+             
+                filteredProducts &&
+                  filteredProducts.map((card, index) => {
+                    return <Card  key={index} data={card} />;
+                  })
+             
+                  
+            )}
             </div>
           </div>
         </>
