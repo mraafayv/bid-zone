@@ -76,6 +76,7 @@ export default function PopularProducts() {
     <div className="popular-products-container">
       <div className="popular-section">
         <h1>Popular Products</h1>
+
         <Slider {...settings}>
           {cardsData &&
             cardsData.map((card, index) => {

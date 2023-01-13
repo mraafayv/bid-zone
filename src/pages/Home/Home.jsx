@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Categories from "../../Components/Categories/Categories";
+import Categories from "../../Components/Categories/Categories"
+
 import PopularProducts from "../../Components/PopularProducts/PopularProducts";
 import HomeContent from "../../Components/HomeContent/HomeContent";
 import Navbar from "../../Components/Navbar/Navbar";

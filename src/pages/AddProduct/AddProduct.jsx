@@ -1,7 +1,9 @@
 import "./AddProduct.css";
 import Navbar from "../../Components/Navbar/Navbar";
 
+
 import { useState, useEffect } from "react";
+
 import {
   getStorage,
   ref,
@@ -9,6 +11,7 @@ import {
   getDownloadURL,
   listAll,
 } from "firebase/storage";
+
 import { useNavigate } from "react-router-dom";
 
 import { collection, addDoc } from "firebase/firestore";
@@ -18,11 +21,8 @@ import uuid from "react-uuid";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function AddProduct() {
-  var today = new Date();
-
-    // time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-    console.log("time" , new Date().toLocaleString())
   const { localUser } = useAuth();
+
   const [imageFile, setImageFile] = useState(null);
   const [percent, setPercent] = useState(null);
   const [url, setUrl] = useState("");
@@ -34,6 +34,7 @@ export default function AddProduct() {
   const [duration, setDuration] = useState(0);
   // const [createdAt, setCreatedAt] = useState("");
   const [basePrice, setBasePrice] = useState(0);
+
   const navigate = useNavigate();
 
   const uploadImage = async () => {
@@ -85,6 +86,7 @@ export default function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     //  await uploadImage();
 
     const docRef = addDoc(collection(db, "products"), {
@@ -123,6 +125,7 @@ export default function AddProduct() {
                 onChange={(e) => setProdName(e.target.value)}
                 value={prodName}
               />
+                  
             </div>
             <div className="product-description">
               <label htmlFor="product-description">Product Description</label>
@@ -162,6 +165,7 @@ export default function AddProduct() {
                 onChange={(e) => {
                   setImageFile(e.target.files[0]);
                 }}
+
               
               />
               <p>{percent !== null ? `${percent}% done` : ""} </p>
@@ -175,7 +179,9 @@ export default function AddProduct() {
                 name="basePrice"
                 id="basePrice"
                 required
+
                 value={basePrice}
+
                 onChange={(e) => setBasePrice(e.target.value)}
               />
             </div>
@@ -192,6 +198,7 @@ export default function AddProduct() {
               />
             </div>
             <div className="button-group">
+
               {percent === 100 && (
                 <button className="post-button" onClick={handleSubmit}>
                   Post
