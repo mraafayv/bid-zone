@@ -1,6 +1,6 @@
 import './Card.css'
-import ProductImage from '../../assets/product.jpeg'
 import Timer from '../Timer/Timer'
+import { Link } from 'react-router-dom'
 
 export default function Card({data}) {
     
@@ -25,8 +25,10 @@ export default function Card({data}) {
             </div>
         </div>
         <div className="card-footer">
-        <button className='view-details-button'>View Details</button>
-        <Timer />
+        <button className='view-details-button'>
+            <Link to={`/productDetails/${data.prodID}`}>View Details</Link>
+        </button>
+        <Timer data={data}/>
         </div>
     </div>
   )

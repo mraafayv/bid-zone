@@ -2,17 +2,25 @@ import "./AddProduct.css";
 import Navbar from "../../Components/Navbar/Navbar";
 
 import { useState } from "react";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
 
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/config";
 
-import uuid from 'react-uuid';
-
+import uuid from "react-uuid";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AddProduct() {
+  const { localUser } = useAuth();
 
-  const user = JSON.parse(localStorage.getItem('user'))
+  // console.log("local user: ",localUser)
+  // const user = JSON.parse(localStorage.getItem('user'))
   // console.log(user.uid)
 
   const [imageFile, setImageFile] = useState(null);
@@ -27,12 +35,7 @@ export default function AddProduct() {
   // const [createdAt, setCreatedAt] = useState("");
   const [basePrice, setBasePrice] = useState(0);
 
-
-
-
-
   const uploadImage = async () => {
-
     const storage = getStorage();
     const listRef = ref(storage, "images/productImages");
 
@@ -46,7 +49,7 @@ export default function AddProduct() {
       "state_changed",
 
       (snapshot) => {
-      const  percent2 = Math.round(
+        const percent2 = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
 
@@ -69,27 +72,25 @@ export default function AddProduct() {
     );
   };
 
-const resetForm = () => {
-  setBasePrice("")
-  setDuration("")
-  // setImageFile("")
-  setProdCategory("")
-  setProdDescription("")
-  setProdName("")
-  setProdImage("")
-}
-  
+  const resetForm = () => {
+    setBasePrice("");
+    setDuration("");
+    // setImageFile("")
+    setProdCategory("");
+    setProdDescription("");
+    setProdName("");
+    setProdImage("");
+  };
 
-  const  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-  //  await uploadImage();
 
-    await uploadImage().then(function (){
+    //  await uploadImage();
 
-      console.log("image url: ",url);
+    await uploadImage().then(function () {
+      console.log("image url: ", url);
       const docRef = addDoc(collection(db, "products"), {
-        ownerID: user.uid,
+        ownerID: localUser.uid,
         prodID: uuid(),
         prodName: prodName,
         prodDescription: prodDescription,
@@ -97,17 +98,14 @@ const resetForm = () => {
         basePrice: basePrice,
         prodImage: url,
         createdAt: new Date(),
-        duration: new Date(duration)
-  
+        duration: new Date(duration),
       });
       console.log("Document written successfully");
-      console.log(localStorage.getItem('user.uid'))
+      console.log(localStorage.getItem("user.uid"));
     });
 
-
-    resetForm()
-  }
-
+    resetForm();
+  };
 
   return (
     <div>
@@ -118,7 +116,13 @@ const resetForm = () => {
           <form className="add-product-form">
             <div className="product-name">
               <label htmlFor="product-name">Product Name</label>
-              <input type="text" name="productName" id="productName" required onChange={(e) => setProdName(e.target.value)}/>
+              <input
+                type="text"
+                name="productName"
+                id="productName"
+                required
+                onChange={(e) => setProdName(e.target.value)}
+              />
             </div>
             <div className="product-description">
               <label htmlFor="product-description">Product Description</label>
@@ -128,14 +132,19 @@ const resetForm = () => {
                 cols="20"
                 rows="10"
                 required
-                
                 onChange={(e) => setProdDescription(e.target.value)}
               ></textarea>
             </div>
             <div className="product-category">
               <label htmlFor="product-category">Product Category</label>
-              <select name="categories" id="categories" onChange={(e) => setProdCategory(e.target.value)}>
-                <option value="Cars" selected>Cars</option>
+              <select
+                name="categories"
+                id="categories"
+                onChange={(e) => setProdCategory(e.target.value)}
+              >
+                <option value="Cars" selected>
+                  Cars
+                </option>
                 <option value="Collectibles">Collectibles</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Watches">Watches</option>
@@ -144,13 +153,25 @@ const resetForm = () => {
             </div>
             <div className="product-image">
               <label htmlFor="product-image">Product Photos</label>
-              <input type="file" name="myImage" accept="image/png, image/jpg, image/jpeg"  onChange={(e) => {setImageFile(e.target.files[0])}}/>
-           {/* <button onClick={uploadImage}>upload photo</button> */}
-           
+              <input
+                type="file"
+                name="myImage"
+                accept="image/png, image/jpg, image/jpeg"
+                onChange={(e) => {
+                  setImageFile(e.target.files[0]);
+                }}
+              />
+              {/* <button onClick={uploadImage}>upload photo</button> */}
             </div>
             <div className="product-base-price">
               <label htmlFor="product-base-price">Base Price</label>
-              <input type="number" name="basePrice" id="basePrice" required onChange={(e) => setBasePrice(e.target.value)}/>
+              <input
+                type="number"
+                name="basePrice"
+                id="basePrice"
+                required
+                onChange={(e) => setBasePrice(e.target.value)}
+              />
             </div>
             <div className="auction-duration">
               <label htmlFor="auction-duration">Auction Ends At</label>
@@ -159,12 +180,15 @@ const resetForm = () => {
                 name="duration"
                 id="duration"
                 required
-               
                 onChange={(e) => setDuration(e.target.value)}
               />
             </div>
             <div className="button-group">
-              <button type="submit" className="post-button" onClick={handleSubmit}>
+              <button
+                type="submit"
+                className="post-button"
+                onClick={handleSubmit}
+              >
                 Post
               </button>
               <button type="reset" className="clear-button">
