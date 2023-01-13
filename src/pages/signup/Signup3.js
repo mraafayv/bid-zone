@@ -31,7 +31,9 @@ const SignUp3 = () => {
     username: "",
     email: "",
     password: "",
+    userDetail:"",
     userType: "Seller",
+
   });
   const [imageFile, setImageFile] = useState(null);
   const [error, setError] = useState(null)
@@ -49,7 +51,7 @@ const SignUp3 = () => {
     // const res = await listAll(listRef);
     const storageRef = ref(storage, `images/profileImages/${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
-    uploadTask.on(
+   uploadTask.on(
       "state_changed",
       (snapshot) => {
         const percent = Math.round(
@@ -73,7 +75,6 @@ const SignUp3 = () => {
 
     try {
       console.log("in try");
-
       const response = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -91,6 +92,7 @@ const SignUp3 = () => {
         email: data.email,
         password: data.password,
         displayName: data.username,
+        userDetail:data.userDetail,
         userType: data.userType,
         url,
       });
@@ -111,6 +113,7 @@ const SignUp3 = () => {
         username: "",
         email: "",
         password: "",
+        userDetail:"",
         userType: "Seller",
       });
       setUrl("");
@@ -155,6 +158,15 @@ const SignUp3 = () => {
                 onChange={handleEvent}
                 value={data.username}
                 name="username"
+              />
+            </div>
+            <div className={styles.inputbox}>
+              <span>Your Details</span>
+              <input
+                type="text"
+                onChange={handleEvent}
+                value={data.userDetail}
+                name="userDetail"
               />
             </div>
             <div className={styles.inputbox}>

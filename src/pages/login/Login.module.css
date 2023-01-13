@@ -30,7 +30,7 @@ form h2 {
   flex-direction: column;
   align-items: flex-start;
 }
-.inputbox input {
+.inputbox input , .inputbox textarea {
   position: relative;
   width: 100%;
   padding: 20px 10px 10px;

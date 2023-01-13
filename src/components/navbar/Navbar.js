@@ -14,7 +14,6 @@ const Navbar = () => {
   var { localUser, setLocalUser } = useAuth();
   const navigate = useNavigate();
 
-  console.log("localUserNavbar", localUser);
   useEffect(() => {
     if (user) {
       console.log("run", user.displayName);
