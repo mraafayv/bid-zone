@@ -3,11 +3,12 @@ import "./App.css";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Login from "./pages/login/Login";
 import Home from './pages/Home/Home';
+import SignUp3 from './pages/signup/Signup3'
 import About from "./pages/about/About";
 import Profile from "./pages/profile/Profile";
 import Auction from "./pages/auction/Auction";
 import AddProduct from './pages/AddProduct/AddProduct'
-
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/auction" element={<Auction />} />
           <Route path="/addProduct" element={<AddProduct />} />
+          <Route path="/productDetails/:id" element={<ProductDetails />}></Route>
 
         </Routes>
       </BrowserRouter>

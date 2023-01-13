@@ -40,7 +40,7 @@ loadData();
 
           
          {cardsData.map(card => {
-          return <Card data={card}/>
+          return <Card data={card} key={card.prodID}/>
          })}
 
         {/* <Card /> 
