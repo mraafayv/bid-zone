@@ -15,8 +15,8 @@ export default function Card({ data }) {
           <h3>{data.prodName}</h3>
         </div>
         <div className="current-bid">
-          <h4 className="price-label">Current Bid:</h4>
-          <h4 className="amount">Rs. 7500</h4>
+          <h4 className="price-label">Base Price:</h4>
+          <h4 className="amount">{data.basePrice}</h4>
         </div>
 
         <div className="location">
@@ -27,7 +27,8 @@ export default function Card({ data }) {
           <button className="view-details-button">
             <Link to={`/productDetails/${data.prodID}`}>View Details</Link>
           </button>
-          <Timer data={data} />
+        <Timer data={data} />
+
         </div>
       </div>
     </div>

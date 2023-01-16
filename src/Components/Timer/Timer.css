@@ -4,6 +4,11 @@
     gap: 4px;
 }
 
+.timer .expired {
+    font-size: 14px;
+    color: red;
+}
+
 .timer-label {
     margin-right: 4px;
     font-weight: bold;

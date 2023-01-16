@@ -3,6 +3,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .page-title {
@@ -38,10 +39,20 @@
   margin-bottom: 12px;
 }
 
+.product-info {
+  max-width: 700px;
+}
+
 .product-details .description-label,
 .product-details .base-price-label,
 .product-details .current-bid-label {
   font-size: 16px;
+  width: fit-content;
+}
+
+.base-price .base-price-label{
+  color: black;
+  font-weight: bold;
 }
 
 .base-price-amount {
@@ -56,8 +67,20 @@
   font-size: 18px;
 }
 
+.base-price p,
+.current-bid-price p {
+  width: fit-content;
+}
+
 .product-details .product-description p {
   color: grey;
+}
+
+.see-more-btn {
+  cursor: pointer;
+  color: rgb(15, 15, 204);
+  font-weight: lighter;
+  font-size: 14px;
 }
 
 .product-details img {
@@ -74,6 +97,7 @@
 
 .bid-input {
   display: flex;
+  width: 200px;
   flex-direction: column;
   gap: 8px;
 }
@@ -121,6 +145,14 @@
   border-radius: 4px;
   height: 32px;
   padding: 8px;
+}
+
+.bid-input input:disabled,
+.bidding-btn-group .decrement:disabled,
+.bidding-btn-group .increment:disabled,
+.bid-input-btn:disabled{
+  opacity: 0.5;
+  cursor: unset;
 }
 
 .bid-input .error-field {
