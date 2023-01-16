@@ -14,11 +14,12 @@ const ContextProvier = ({ children }) => {
 const auth = getAuth();
 const user = auth.currentUser;
   const [localUser, setLocalUser] = useState(null);
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       // console.log(auth)
       if (user) {
-        console.log("authUser" , user)
+        // console.log("authUser" , user)
         setLocalUser(user);
       } else {
         console.log("not logged in")

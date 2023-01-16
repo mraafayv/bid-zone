@@ -1,5 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, addDoc, collection } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,10 +19,13 @@ const firebaseConfig = {
   messagingSenderId: "450790718260",
   appId: "1:450790718260:web:a0e46dd16225df6fa74361",
   measurementId: "G-YPHS7N8EX0",
+  databaseURL: "https://bidzone-a1701-default-rtdb.firebaseio.com/",
+
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 const auth = getAuth(app);
 //init services
 const db = getFirestore();
@@ -33,5 +38,6 @@ export {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   storage,
-  db
+  db,
+  database
 };

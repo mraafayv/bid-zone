@@ -1,0 +1,32 @@
+.bell_notification {
+  position: relative;
+  color: black;
+  cursor: pointer;
+}
+.bell_notification::after {
+  content: attr(current-count);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: -3px;
+  right: -7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 2px solid #23242a;
+}
+.notify_block {
+  background-color: #fff;
+  padding: 0 3rem;
+  border-radius: 0.625rem;
+  position: absolute;
+  top: 9vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  right: 23px;
+  
+}
