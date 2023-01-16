@@ -12,6 +12,7 @@ import Auction from "./pages/auction/Auction";
 import AddProduct from './pages/AddProduct/AddProduct'
 import Notification from "./pages/notification/notification";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import AuctionCategory from "./pages/AunctionCategory/AuctionCategory";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/addProduct" element={<AddProduct />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/productDetails/:id" element={<ProductDetails />}></Route>
+          <Route path="/auction/:id" element={<AuctionCategory />}></Route>
 
 
         </Routes>

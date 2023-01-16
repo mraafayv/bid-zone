@@ -1,0 +1,70 @@
+.auction-content .auction-card {
+    /* border: 1px solid grey; */
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 0.5px solid rgb(230, 234, 235);
+    /* background: rgb(248, 248, 248); */
+    height: 100px;
+    padding: 8px;
+  }
+  
+  .auction-card:hover {
+      background-color: rgba(227, 255, 242, 0.4);
+      transition: 0.3s ease-in;
+  }
+  
+  .auction-info {
+    /* border: 1px solid yellow; */
+    width: 500px;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .product-location {
+    color: rgb(202, 202, 202);
+  }
+  
+  .auction-info .product-description {
+    color: rgb(146, 146, 146);
+    font-weight: lighter;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .auction-card .price-section {
+    /* border: 1px solid; */
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 200px;
+  }
+  
+  .base-price-label {
+    font-weight: lighter;
+    color: lightgray;
+  }
+  
+  .price-section .current-bid-label {
+    color: green;
+  }
+  
+  
+  .auction-card .timer-section{
+      /* border: 1px solid; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 300px;
+  }
+  
+  a:link, a:visited{
+      text-decoration: none;
+      color: inherit;
+  }

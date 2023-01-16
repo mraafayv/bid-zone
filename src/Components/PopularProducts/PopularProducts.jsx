@@ -70,7 +70,7 @@ export default function PopularProducts() {
     loadData();
    
 
-  }, []);
+  }, [cardsData]);
 
   return (
     <div className="popular-products-container">

@@ -32,6 +32,7 @@ export default function AddProduct() {
   const [prodImage, setProdImage] = useState("");
   const [prodCategory, setProdCategory] = useState("Cars");
   const [duration, setDuration] = useState(0);
+  const [validDuration, setValidDuration] = useState(false);
   // const [createdAt, setCreatedAt] = useState("");
   const [basePrice, setBasePrice] = useState(0);
 
@@ -85,7 +86,7 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    checkDuration(duration);
 
     //  await uploadImage();
 
@@ -107,6 +108,22 @@ export default function AddProduct() {
 
     resetForm();
   };
+
+
+  const checkDuration = (duration) => {
+    const selectedTime = new Date(duration);
+    const now = Date.now();
+    const diff = selectedTime - now;
+    
+    if(diff<0){
+      setValidDuration(false);
+    }else {
+      setValidDuration(true);
+    }
+  }
+
+
+  let durationClass = validDuration ? "" : "display-error";
 
   return (
     <div>
@@ -188,7 +205,9 @@ export default function AddProduct() {
 
             <div className="auction-duration">
               <label htmlFor="auction-duration">Auction Ends At</label>
+            
               <input
+                className={durationClass}
                 type="datetime-local"
                 name="duration"
                 id="duration"
@@ -196,6 +215,13 @@ export default function AddProduct() {
                 required
                 onChange={(e) => setDuration(e.target.value)}
               />
+              {validDuration ? (
+                        <div className="error-message">
+                          Please select a valid date
+                        </div>
+                      ) : (
+                        <></>
+                      )}
             </div>
             <div className="button-group">
 
