@@ -1,8 +1,6 @@
-
-import './Card.css'
-import Timer from '../Timer/Timer'
-import { Link } from 'react-router-dom'
-
+import "./Card.css";
+import Timer from "../Timer/Timer";
+import { Link } from "react-router-dom";
 
 export default function Card({ data }) {
   // console.log(props)
@@ -24,15 +22,14 @@ export default function Card({ data }) {
         <div className="location">
           <h4 className="location-label">Location: </h4>
           <h4 className="pin-location">Pakistan </h4>
-
+        </div>
         <div className="card-footer">
-        <button className='view-details-button'>
+          <button className="view-details-button">
             <Link to={`/productDetails/${data.prodID}`}>View Details</Link>
-        </button>
-        <Timer data={data}/>
+          </button>
+          <Timer data={data} />
         </div>
       </div>
-     
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-
+import NotificationIcon from "../../pages/notification/NotificationIcon";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -15,10 +15,11 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     if (user) {
       console.log("run", user.displayName);
-
-      // console.log("run", localUser.displayName);
+      
+      
     }
   }, [localUser]);
   const handleClick = () => {
@@ -62,7 +63,9 @@ const Navbar = () => {
               <li className={styles.navbar_name}>
                 <p>{localUser.displayName}</p>
               </li>
-
+              <li className={styles.navbar_name}>
+                <NotificationIcon />
+              </li>
               <li
                 className={styles.menu_list_item_img}
                 onMouseOver={() => setIsHovering(true)}

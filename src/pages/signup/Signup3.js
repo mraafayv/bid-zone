@@ -31,19 +31,24 @@ const SignUp3 = () => {
     username: "",
     email: "",
     password: "",
-    userDetail:"",
-    userType: "Seller",
-
+    userDetail: "",
   });
+  const [userType, setUserType] = useState("Seller");
   const [imageFile, setImageFile] = useState(null);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
   const [url, setUrl] = useState("");
   const storage = getStorage();
   const listRef = ref(storage, "images");
 
   const handleEvent = (e) => {
-    let inputs = { [e.target.name]: e.target.value };
-    setData({ ...data, ...inputs });
+    setData({
+      ...data, [e.target.name]: e.target.value,
+
+     
+    });
+
+    // let inputs = { [e.target.name]: e.target.value };
+    // setData({ ...data, });
   };
   const uploadImage = async (e) => {
     e.preventDefault();
@@ -51,7 +56,7 @@ const SignUp3 = () => {
     // const res = await listAll(listRef);
     const storageRef = ref(storage, `images/profileImages/${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
-   uploadTask.on(
+    uploadTask.on(
       "state_changed",
       (snapshot) => {
         const percent = Math.round(
@@ -92,9 +97,10 @@ const SignUp3 = () => {
         email: data.email,
         password: data.password,
         displayName: data.username,
-        userDetail:data.userDetail,
-        userType: data.userType,
+        userDetail: data.userDetail,
+        userType: userType,
         url,
+        notification:[],
       });
       updateProfile(auth.currentUser, {
         displayName: data.username,
@@ -106,20 +112,19 @@ const SignUp3 = () => {
         })
         .catch((error) => {
           console.log("updatednot", error);
-          
         });
 
       setData({
         username: "",
         email: "",
         password: "",
-        userDetail:"",
-        userType: "Seller",
+        userDetail: "",
       });
+      setUserType("");
       setUrl("");
     } catch (error) {
       console.log(error.message);
-      setError(error.message)
+      setError(error.message);
     }
   };
 
@@ -133,9 +138,8 @@ const SignUp3 = () => {
               <span>Your Role</span>
               <select
                 name="usertype"
-                value={data.userType}
-                required
-                onChange={handleEvent}
+                value={userType}
+                onChange={(e) => setUserType(e.target.value)}
               >
                 <option value="Seller">I am Seller</option>
                 <option value="Bidder">I am Bidder</option>
@@ -199,7 +203,7 @@ const SignUp3 = () => {
                 Sign Up
               </button>
             )}
-           
+
             {error && <p>{error}</p>}
           </form>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../../Components/Card/Card";
-
+import { getDatabase, ref as realtimeRef, child, get } from "firebase/database";
 import {
   ref,
   uploadBytes,
@@ -24,53 +24,9 @@ import Slider from "react-slick";
 import styles from "./Profile.module.css";
 import { db, signInWithEmailAndPassword } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
-    );
-  }
-
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
-    );
-  }
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    
-    // beforeChange: function(currentSlide, nextSlide) {
-    //   console.log("before change", currentSlide, nextSlide);
-    // },
-    // afterChange: function(currentSlide) {
-    //   console.log("after change", currentSlide);
-    // },
-    
-  };
   const auth = getAuth();
   const storage = getStorage();
   const navigate = useNavigate();
@@ -85,22 +41,22 @@ const Profile = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [password, setPassword] = useState();
   const [blockOption, setBlockOption] = useState(null);
+
   const [data, setData] = useState({
     password: "",
   });
   console.log();
+  //my work
+
+  //end mywork
   useEffect(() => {
     if (localUser) {
       setId(localUser.uid);
       getProfile(localUser.uid);
       setAuthUser(localUser);
-      showUserProduct(localUser.uid);
     }
   }, [localUser]);
-  const handleEvent = (e) => {
-    let inputs = { [e.target.name]: e.target.value };
-    setData({ ...data, ...inputs });
-  };
+
   const changePasswordBlock = (e) => {
     const id = e.target.getAttribute("id");
     console.log("id", id);
@@ -234,19 +190,6 @@ const Profile = () => {
       }
     });
   };
-  const showUserProduct = async (id) => {
-    const tempCards = [];
-
-    const querySnapshot = await getDocs(collection(db, "products"));
-    querySnapshot.forEach((doc) => {
-      if (doc.data().ownerID === id) {
-        tempCards.push(doc.data());
-      }
-    });
-    setFilteredProducts(tempCards);
-
-    console.log("filteredData", filteredProducts);
-  };
 
   return (
     <>
@@ -260,7 +203,9 @@ const Profile = () => {
               <div className={styles.card_body}>
                 <img className={styles.img_account_profile} src={url} alt="" />
 
-                <div className={styles.card_text}>{getUser.displayName}</div>
+                <div className={styles.card_text}>
+                  {getUser.displayName} {getUser.userType}
+                </div>
                 <input
                   type="file"
                   onChange={(e) => setImageFile(e.target.files[0])}
@@ -277,11 +222,6 @@ const Profile = () => {
                   </button>
                 </li>
                 <li>
-                  <button onClick={changePasswordBlock} id="auctions">
-                    My Auctions
-                  </button>
-                </li>
-                <li>
                   <button onClick={changePasswordBlock} id="profileDetails">
                     Details
                   </button>
@@ -294,7 +234,7 @@ const Profile = () => {
             {blockOption === null && <h3>this is my head</h3>}
             {blockOption === "changePassword" && (
               <div className={styles.card_form}>
-                <div className={styles.card}>
+                <div className={styles.card_password}>
                   <div class={styles.card_header}>Account Details</div>
                   <div className={styles.card_body}>
                     <form>
@@ -320,18 +260,43 @@ const Profile = () => {
             )}
 
             {/* auctions */}
-            <div className={styles.auctions_card}>
-            {blockOption === "auctions" && (
-             
-             
-                filteredProducts &&
-                  filteredProducts.map((card, index) => {
-                    return <Card  key={index} data={card} />;
-                  })
-             
-                  
+
+            {blockOption === "profileDetails" && (
+              <div className={styles.profile_details}>
+                <h3>About Me</h3>
+                <h6>A Lead UX UI designer based in Canada</h6>
+                <p className={styles.para}>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Iste, nesciunt. Non perferendis dolore nobis hic sint
+                  assumenda, excepturi accusamus voluptates neque inventore quos
+                  esse cupiditate ipsum repudiandae nostrum quas doloribus.
+                </p>
+                <div className={styles.userInfo}>
+                  <div className={styles.bioData_head1}>
+                    <div className={styles.bioData_content}>
+                      <span>Name:</span>
+                      <p>{getUser.displayName}</p>
+                    </div>
+                    <div className={styles.bioData_content}>
+                      <span>Your role:</span>
+                      <p>{getUser.userType}</p>
+                    </div>
+                  </div>
+                  <div className={styles.bioData_head2}>
+                  <div className={styles.bioData_content}>
+                      <span>Gender:</span>
+                      <p>Male</p>
+                    </div>
+                   
+                    <div className={styles.bioData_content}>
+                      <span>Email:</span>
+                      <p>{getUser.email}</p>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
             )}
-            </div>
           </div>
         </>
       )}

@@ -10,9 +10,10 @@ import About from "./pages/about/About";
 import Profile from "./pages/profile/Profile";
 import Auction from "./pages/auction/Auction";
 import AddProduct from './pages/AddProduct/AddProduct'
-import Notification from "./pages/notification/notification";
+import Notification from "./pages/notification/NotificationIcon";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
-
+import PD from "./pages/ProductDetails/PD";
+import Notify from "./pages/notification/Notify";
 
 function App() {
   return (
@@ -26,8 +27,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/auction" element={<Auction />} />
           <Route path="/addProduct" element={<AddProduct />} />
-          <Route path="/notification" element={<Notification />} />
+          <Route path="/notification" element={<Notify />} />
           <Route path="/productDetails/:id" element={<ProductDetails />}></Route>
+          
 
 
         </Routes>
