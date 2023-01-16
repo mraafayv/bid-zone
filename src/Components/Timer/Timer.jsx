@@ -1,12 +1,19 @@
+
 import "./Timer.css";
 import { useEffect, useState } from "react";
+import { getDatabase, ref, set } from "firebase/database";
+
 
 export default function Timer({ data, checkExpiryOfTimer }) {
+
+
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+
   const [expired, setExpired] = useState(false);
+
   // let [creationTime, setCreationTime] = useState(new Date())
 
   useEffect(() => {
@@ -19,6 +26,7 @@ export default function Timer({ data, checkExpiryOfTimer }) {
 
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
+
 
       // Time calculations for days, hours, minutes and seconds
       setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
@@ -33,7 +41,9 @@ export default function Timer({ data, checkExpiryOfTimer }) {
         setExpired(true);
         checkExpiryOfTimer(distance);
         clearInterval(x);
-        // document.querySelector("#timer").innerHTML = "This Auction is no longer Available";
+
+        writeUserData(data.prodID);
+
       }
     }, 1000);
   }, []);

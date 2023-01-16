@@ -18,6 +18,7 @@ import {
   doc,
   arrayUnion,
 } from "firebase/firestore";
+import { getDatabase, ref, set } from "firebase/database";
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -60,6 +61,26 @@ export default function ProductDetails() {
   }
 
   async function placeBid() {
+    //my work
+    console.log("product: ", product);
+    writeUserData(product.prodID, product.ownerID , product.prodName);
+    function writeUserData(prodID, ownerID , prodName) {
+      const db = getDatabase();
+      set(ref(db, "users/" + prodID), {
+        id: prodID,
+        msg: {
+          bidderID: localUser.uid,
+          bidderName: localUser.displayName,
+          bidderEmail: localUser.email,
+          bidPrice: bidAmount,
+          ownerID:ownerID,
+          prodName:prodName,
+          
+        },
+      });
+    }
+
+    //raffay
     if (bidAmount < Number(product.basePrice)) {
       console.log(bidAmount);
       // console.log("Can't place a bid on amount lesser than the base price")
@@ -76,6 +97,7 @@ export default function ProductDetails() {
     }
     setTimeout(window.location.reload(), 3000);
   }
+
   useEffect(() => {
     setIsPending(true);
 
@@ -212,8 +234,15 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+
+          <div className="product-timer">
+            <Timer data={product} />
+            
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

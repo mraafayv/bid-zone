@@ -100,7 +100,6 @@ export default function AddProduct() {
       prodImage: url,
       createdAt: new Date(),
       currentBid:"",
-      notification:[],
       duration: new Date(duration),
     });
     console.log("Document written successfully");
