@@ -5,7 +5,7 @@ import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import NotificationIcon from "../../pages/notification/NotificationIcon";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
-
+import Searchbar from "../Searchbar/Searchbar";
 const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -15,11 +15,8 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     if (user) {
       console.log("run", user.displayName);
-      
-      
     }
   }, [localUser]);
   const handleClick = () => {
@@ -113,6 +110,9 @@ const Navbar = () => {
             <ul
               className={isClick ? styles.menu_list_active : styles.menu_list}
             >
+              <li>
+                <Searchbar />
+              </li>
               <li className={styles.active}>
                 <Link to="/"> Home </Link>
               </li>

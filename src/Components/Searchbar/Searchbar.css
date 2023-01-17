@@ -2,26 +2,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #fff;
-    width: 450px;
+    background: black;
+    width: 340px;
     height: 36px;
     border-radius: 4px;
+    /* padding: 4px 4px 6px 12px; */
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 8px;
+   
 
 
 }
 
 .searchbar input {
-    width: 412px;
+    width: 300px;
     height: 32px;
     border-radius: 4px;
-    padding: 4px 4px 4px 12px;
     border-style: none;
     outline: none;
+    padding-left: 3px;
 }
 
 .searchbar span {
     padding-right: 8px;
+    color: aliceblue;
 } 
-
-
-

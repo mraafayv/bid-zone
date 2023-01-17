@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../../firebase/config";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar2 from "../../Components/Navbar/Navbar2";
 // import Timer from "../../Components/Timer/Timer";
 import "./Auction.css";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
@@ -44,7 +44,7 @@ const Auction = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar2 />
       <div className="auctions-page-container">
         <div className="auctions-page">
           <h1 className="page-title">Auctions</h1>

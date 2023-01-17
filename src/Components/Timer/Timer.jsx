@@ -13,10 +13,19 @@ export default function Timer({ data, checkExpiryOfTimer }) {
   const [seconds, setSeconds] = useState(0);
 
   const [expired, setExpired] = useState(false);
+  function writeUserData(id) {
+    const db = getDatabase();
+    set(ref(db, "expireProduct/" + id), {
+      prodID: id,
+      expired: true,
+    });
+  }
 
   // let [creationTime, setCreationTime] = useState(new Date())
 
+
   useEffect(() => {
+    
     // console.log("data.duration: ",data.duration)
     var countDownDate = data.duration.seconds * 1000;
 
@@ -36,10 +45,9 @@ export default function Timer({ data, checkExpiryOfTimer }) {
       setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
       setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
 
-      // If the count down is finished, write some text
       if (distance < 0) {
         setExpired(true);
-        checkExpiryOfTimer(distance);
+        // checkExpiryOfTimer(distance);
         clearInterval(x);
 
         writeUserData(data.prodID);

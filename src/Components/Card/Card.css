@@ -1,5 +1,5 @@
 .card {
-    height: fit-content;
+    /* height: fit-content; */
     padding: 8px;
     border: 1px solid rgb(209, 209, 209);
     border-radius: 4px;

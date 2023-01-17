@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../../Components/Card/Card";
+import Loader from "../../Components/Loader/Loader"
 import { getDatabase, ref as realtimeRef, child, get } from "firebase/database";
 import {
   ref,
@@ -19,7 +20,7 @@ import {
   signOut,
 } from "firebase/auth";
 import Slider from "react-slick";
-
+import Navbar2 from "../../Components/Navbar/Navbar2";
 // import styles from "./Profile.module.css";
 import styles from "./Profile.module.css";
 import { db, signInWithEmailAndPassword } from "../../firebase/config";
@@ -39,7 +40,9 @@ const Profile = () => {
   const [authUser, setAuthUser] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [password, setPassword] = useState();
+  const [newPassword, setNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+
   const [blockOption, setBlockOption] = useState(null);
 
   const [data, setData] = useState({
@@ -54,6 +57,12 @@ const Profile = () => {
       setId(localUser.uid);
       getProfile(localUser.uid);
       setAuthUser(localUser);
+      const getblockID = localStorage.getItem("blockState");
+
+      if (getblockID) {
+        console.log("getblockID", JSON.parse(getblockID));
+        setBlockOption(JSON.parse(getblockID));
+      }
     }
   }, [localUser]);
 
@@ -61,10 +70,10 @@ const Profile = () => {
     const id = e.target.getAttribute("id");
     console.log("id", id);
     if (id === "changePassword") {
+      localStorage.setItem("blockState", JSON.stringify(id));
       setBlockOption("changePassword");
-    } else if (id === "auctions") {
-      setBlockOption("auctions");
     } else if (id === "profileDetails") {
+      localStorage.setItem("blockState", JSON.stringify(id));
       setBlockOption("profileDetails");
     }
   };
@@ -125,17 +134,17 @@ const Profile = () => {
   const updateData = async (e) => {
     e.preventDefault();
     if (authUser) {
-      console.log(getUser.password);
+      console.log(getUser.oldPassword);
       const credential = EmailAuthProvider.credential(
         auth.currentUser.email,
-        getUser.password
+        oldPassword
       );
       console.log(credential);
       reauthenticateWithCredential(auth.currentUser, credential)
         .then(() => {
           // User re-authenticated.
           alert("User re-authenticated");
-          updatePassword(auth.currentUser, password)
+          updatePassword(auth.currentUser, newPassword)
             .then(() => {
               alert("password updated successfully");
               const res = getDocs(collection(db, "userInformation")).then(
@@ -148,7 +157,7 @@ const Profile = () => {
                         userDoc._key.path.segments[6]
                       );
                       const imageRes = await updateDoc(washingtonRef, {
-                        password: password,
+                        password: newPassword,
                       });
                       console.log("imageRes", imageRes);
                     }
@@ -185,7 +194,7 @@ const Profile = () => {
         setGetUser(doc.data());
         // data.username = doc.data().displayName;
         // data.email = doc.data().email;
-        setData(doc.data().password);
+        setData(doc.data().newPassword);
         setUrl(doc.data().url);
       }
     });
@@ -196,33 +205,37 @@ const Profile = () => {
       {getUser && (
         <>
           {/* --- header start --- */}
-
+          <div className={styles.card_main}>
+          <Navbar2 />
           <div className={styles.card_container}>
+          
             <div className={styles.card}>
               <div className={styles.card_header}>Profile Picture</div>
               <div className={styles.card_body}>
                 <img className={styles.img_account_profile} src={url} alt="" />
 
-                <div className={styles.card_text}>
+                {/* <div className={styles.card_text}>
                   {getUser.displayName} {getUser.userType}
-                </div>
-                <input
-                  type="file"
-                  onChange={(e) => setImageFile(e.target.files[0])}
-                  name="file"
-                />
-                <p>{percent !== null ? `${percent}% done` : ""} </p>
+                </div> */}
+                <div className={styles.pic_detail}>
+                  <input
+                    type="file"
+                    onChange={(e) => setImageFile(e.target.files[0])}
+                    name="file"
+                  />
+                  <p>{percent !== null ? `${percent}% done` : ""} </p>
 
-                <button onClick={uploadImage}>upload</button>
+                  <button onClick={uploadImage}>upload</button>
+                </div>
               </div>
               <ul className={styles.profile_menu}>
                 <li>
-                  <button onClick={changePasswordBlock} id="changePassword">
+                  <button onClick={changePasswordBlock} id="changePassword" className={styles.update_btn}>
                     Change Password
                   </button>
                 </li>
                 <li>
-                  <button onClick={changePasswordBlock} id="profileDetails">
+                  <button onClick={changePasswordBlock} id="profileDetails" className={styles.update_btn}>
                     Details
                   </button>
                 </li>
@@ -239,11 +252,22 @@ const Profile = () => {
                   <div className={styles.card_body}>
                     <form>
                       <div className={styles.inputbox}>
-                        <span>Password</span>
+                        <span>Old Password</span>
                         <input
-                          type="text"
-                          onChange={(e) => setPassword(e.target.value)}
-                          defaultValue={getUser.password}
+                          type="password"
+                          onChange={(e) => setOldPassword(e.target.value)}
+                          // defaultValue={getUser.password}
+                          value={oldPassword}
+                          name="password"
+                        />
+                      </div>
+                      <div className={styles.inputbox}>
+                        <span>New Password</span>
+                        <input
+                          type="password"
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          //  defaultValue={getUser.password}
+                          value={newPassword}
                           name="password"
                         />
                       </div>
@@ -264,7 +288,7 @@ const Profile = () => {
             {blockOption === "profileDetails" && (
               <div className={styles.profile_details}>
                 <h3>About Me</h3>
-                <h6>A Lead UX UI designer based in Canada</h6>
+                <h6>{getUser.userType}</h6>
                 <p className={styles.para}>
                   Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                   Iste, nesciunt. Non perferendis dolore nobis hic sint
@@ -275,7 +299,7 @@ const Profile = () => {
                   <div className={styles.bioData_head1}>
                     <div className={styles.bioData_content}>
                       <span>Name:</span>
-                      <p>{getUser.displayName}</p>
+                      <p style={{textTransform:"capitalize"}}>{getUser.displayName}</p>
                     </div>
                     <div className={styles.bioData_content}>
                       <span>Your role:</span>
@@ -283,24 +307,24 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className={styles.bioData_head2}>
-                  <div className={styles.bioData_content}>
+                    <div className={styles.bioData_content}>
                       <span>Gender:</span>
-                      <p>Male</p>
+                      <p>Female</p>
                     </div>
-                   
+
                     <div className={styles.bioData_content}>
                       <span>Email:</span>
                       <p>{getUser.email}</p>
                     </div>
-                   
                   </div>
                 </div>
               </div>
             )}
           </div>
+          </div>
         </>
       )}
-      {!getUser && <h1>Loading.....</h1>}
+      {!getUser && <Loader />  }
     </>
   );
 };

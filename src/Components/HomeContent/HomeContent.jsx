@@ -8,9 +8,9 @@ export default function HomeContent() {
         <div className="intro-text">
           <h3>Welcome to BidZone!</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-            voluptatibus quod iure suscipit error, nihil dicta repellendus
-            ducimus libero commodi deleniti
+          BidZone allows you to sell and bid on items from the comfort of your home or office. 
+          Purchase or sell things like real estate, jewels, business equipment, vehicles, and electronics. 
+          BidZone offers protection for both buyers and sellers.
           </p>
           <button>Get Started</button>
         </div>

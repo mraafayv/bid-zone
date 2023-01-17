@@ -6,7 +6,10 @@ nav {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 9vh;
   background: #23242a;
-  position: relative;
+  width: 100%;
+  /* position: relative; */
+  position: fixed;
+
 }
 .logo h2 {
   position: relative;
