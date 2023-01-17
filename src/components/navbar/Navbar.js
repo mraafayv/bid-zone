@@ -60,7 +60,6 @@ const Navbar = () => {
               <li className={styles.navbar_name}>
                 <p>{localUser.displayName}</p>
               </li>
-<<<<<<< HEAD
 
               <Link to="/notification">
                 <li className={styles.notifications}>
@@ -70,11 +69,6 @@ const Navbar = () => {
                 </li>
               </Link>
 
-=======
-              <li className={styles.navbar_name}>
-                <NotificationIcon />
-              </li>
->>>>>>> 4b83e9b5c706279e870dcdaa57cbf35a976eae8d
               <li
                 className={styles.menu_list_item_img}
                 onMouseOver={() => setIsHovering(true)}
