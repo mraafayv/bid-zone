@@ -1,0 +1,36 @@
+.navbar-container {
+    width: 100vw;
+    height: 48px;
+    background: rgb(112, 203, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.user-avatar {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid;
+}
+
+.user-avatar span {
+    font-size: 1.2rem;
+    text-align: center;
+}

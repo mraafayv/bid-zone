@@ -1,0 +1,19 @@
+.auctions-category-page-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .auctions-page {
+    width: 80%;
+    /* border: 1px solid black; */
+    /* background: rgb(228, 228, 228); */
+    justify-content: center;
+  }
+  
+  .auctions-page h1 {
+    text-align: center;
+  }
+  
+  

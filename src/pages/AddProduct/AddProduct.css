@@ -1,0 +1,97 @@
+.add-product-container {
+    width: 100vw;
+    /* height: 100vw; */
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.add-product-page {
+    width: 80%;
+    height: fit-content;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;
+}
+
+.add-product-page .page-title {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.add-product-form {
+    padding: 3rem;
+}
+
+.product-name,
+.product-image,
+.product-base-price,
+.auction-duration,
+.product-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-product-form label {
+    font-size: 16px;
+    margin-right: 12px;
+    font-weight: normal;
+}
+
+.add-product-form input {
+    padding: 8px;
+    border-style: none;
+    border-radius: 4px;
+    width: 280px;
+    height: 32px;
+    margin-top: 12px;
+}
+
+
+.product-image div {
+    background: rgb(221, 221, 221);
+    border-style: none;
+    border-radius: 4px;
+}
+
+.product-description textarea {
+    border-style: none;
+    outline: none;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.post-button {
+    font-size: 1.2rem;
+    width: 120px;
+    height: 40px;
+    background-color: rgb(46, 130, 255);
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.clear-button {
+    font-size: 1.2rem;
+    width: 120px;
+    height: 40px;
+    border: 1px solid rgb(46, 130, 255);
+    border-radius: 4px;
+    color: rgb(46, 130, 255);
+}
+
+
+.add-product-form div {
+    margin-top: 24px;
+}
+
+.display-error {
+    border: 1px solid red;
+    color: red;
+}

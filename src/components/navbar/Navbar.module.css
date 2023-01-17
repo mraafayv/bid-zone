@@ -1,0 +1,237 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 9vh;
+  background: #23242a;
+  width: 100%;
+  /* position: relative; */
+  position: fixed;
+
+}
+.logo h2 {
+  position: relative;
+  font-size: 3vw;
+  color: #1c1c1c;
+  -webkit-text-stroke: 0.1vw #45f3ff;
+}
+
+.drop_down {
+  background-color: #fff;
+  padding: 0 3rem;
+  border-radius: 0.625rem;
+  position: absolute;
+  top: 10vh;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  right: 23px;
+}
+.drop_down_hoverOver {
+  background-color: #fff;
+  padding: 0 3rem;
+  border-radius: 0.625rem;
+  position: absolute;
+  top: 9vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  right: 23px;
+}
+.sub_item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.725rem;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+}
+.sub_item p a:hover , .sub_item p:hover {
+  color: #000;
+  cursor: pointer;
+}
+.sub_item p a,
+.sub_item p {
+  font-size: 0.85rem;
+  color: #888888;
+  font-weight: 500;
+  margin: 0.4rem 0;
+  flex: 1;
+}
+.menu_list {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+}
+.login_btn button {
+  padding: 8px 22px;
+  background: transparent;
+  color: #fff;
+
+  border: 2px solid #45f3ff;
+  border-radius: 4px;
+  font-size: 1em;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+
+.login_btn button:hover {
+  background: #45f3ff;
+  transition: 0.3s;
+  color: #1c1c1c;
+}
+
+
+.notifications i {
+  position: relative;
+  color: white;
+  font-size: 24px;
+}
+
+.notifications i span {
+  position: absolute;
+  transform: translate(-8px, -2px);
+  text-align: center;
+  color: white;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: red;
+  z-index: 1;
+}
+
+.menu_list_item,
+.navbar_name {
+  padding: 0 20px;
+}
+.menu_list_item_img {
+  padding: 0 20px;
+  height: 9vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu_list_item a,
+.active a,
+.login_btn a,
+.navbar_name {
+  font-size: 1.05em;
+  font-weight: 600;
+  color: rgb(7, 7, 7);
+  transition: 0.3s all ease-in-out;
+  position: relative;
+}
+.navbar_img {
+  cursor: pointer;
+}
+.menu_list .active {
+  padding: 0 20px;
+}
+.menu_list .menu_list_item a:hover,
+.menu_list .active a {
+  color: #45f3ff;
+}
+
+.menu_list li .navbar_img img {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid;
+}
+.menu_list .menu_list_item a:hover::after,
+.menu_list .active a::after {
+  content: "";
+  width: 40%;
+  height: 2px;
+  background: #45f3ff;
+  position: absolute;
+  bottom: -4px;
+  left: 0px;
+}
+.humberger {
+  display: none;
+  color: #ffff;
+}
+@media screen and (max-width: 768px) {
+  .menu_list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top: 90px;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    background: #1c1c1c;
+    color: #45f3ff;
+    padding: 40px 0 0 10px;
+  }
+  .menu_list_active li {
+    margin-bottom: 25px;
+  }
+  .humberger {
+    display: block;
+  }
+  .menu_list_active li a {
+    font-size: 18px;
+    cursor: pointer;
+    color: #ffff;
+  }
+  .menu_list_active li a:hover,
+  .menu_list_active .active a {
+    color: #45f3ff;
+  }
+  .menu_list_active li a:hover::after,
+  .menu_list_active .active a::after {
+    content: "";
+    width: 40%;
+    height: 2px;
+    background: #45f3ff;
+    position: absolute;
+    bottom: -4px;
+    left: 0px;
+  }
+  .menu_list_active {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top: 90px;
+    right: 0px;
+    width: 300px;
+    height: 100vh;
+    background: #1c1c1c;
+    padding: 40px 0 0 10px;
+  }
+}
+.bell_notification {
+  position: relative;
+  color: black;
+  cursor: pointer;
+}
+.bell_notification::after {
+  content: attr(current-count);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: -3px;
+  right: -7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 2px solid #23242a;
+}
