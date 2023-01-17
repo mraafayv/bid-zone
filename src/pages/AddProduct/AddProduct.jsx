@@ -1,5 +1,5 @@
 import "./AddProduct.css";
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar2 from "../../Components/Navbar/Navbar2";
 
 
 import { useState, useEffect } from "react";
@@ -86,26 +86,44 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    checkDuration(duration);
+    checkDuration(duration)
+    
+    if(validDuration){
+      const docRef = addDoc(collection(db, "products"), {
+        ownerID: localUser.uid,
+        prodID: uuid(),
+        prodName: prodName,
+        prodDescription: prodDescription,
+        prodCategory: prodCategory,
+        basePrice: basePrice,
+        prodImage: url,
+        createdAt: new Date(),
+        currentBid:"",
+        notification:[],
+        duration: new Date(duration),
+      });
+      console.log("Document written successfully");
+      console.log("docRef", docRef);
+      resetForm();
+    }
 
     //  await uploadImage();
 
-    const docRef = addDoc(collection(db, "products"), {
-      ownerID: localUser.uid,
-      prodID: uuid(),
-      prodName: prodName,
-      prodDescription: prodDescription,
-      prodCategory: prodCategory,
-      basePrice: basePrice,
-      prodImage: url,
-      createdAt: new Date(),
-      currentBid:"",
-      duration: new Date(duration),
-    });
-    console.log("Document written successfully");
-    console.log("docRef", docRef);
+    // const docRef = addDoc(collection(db, "products"), {
+    //   ownerID: localUser.uid,
+    //   prodID: uuid(),
+    //   prodName: prodName,
+    //   prodDescription: prodDescription,
+    //   prodCategory: prodCategory,
+    //   basePrice: basePrice,
+    //   prodImage: url,
+    //   createdAt: new Date(),
+    //   currentBid:"",
+    //   duration: new Date(duration),
+    // });
+    // console.log("Document written successfully");
+    // console.log("docRef", docRef);
 
-    resetForm();
   };
 
 
@@ -126,7 +144,7 @@ export default function AddProduct() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar2 />
       <div className="add-product-container">
         <div className="add-product-page">
           <h1 className="page-title">Add Product</h1>
@@ -215,11 +233,11 @@ export default function AddProduct() {
                 onChange={(e) => setDuration(e.target.value)}
               />
               {validDuration ? (
+                        <></>
+                      ) : (
                         <div className="error-message">
                           Please select a valid date
                         </div>
-                      ) : (
-                        <></>
                       )}
             </div>
             <div className="button-group">

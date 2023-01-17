@@ -69,23 +69,23 @@ export default function PopularProducts() {
       setCardsData(tempCards);
       console.log("cardsData", tempCards);
     };
-    // const SearchData = () => {
-    //   if (search.length > 0) {
-    //     // const str = search.charAt(0).toUpperCase() + search.slice(1);
-    //     const str = search.toLowerCase();
-    //     let getData = cardsData.filter((data) => {
-    //       return (
-    //         data.prodName.toLowerCase().match(str) ||
-    //         data.prodCategory.toLowerCase().match(str)
-    //       );
-    //     });
-    //     setCardsData(getData);
-    //   } else if (search.length == 0) {
-    //     setCardsData(cardsData);
-    //   }
-    // };
+    const SearchData = () => {
+      if (search.length > 0) {
+        // const str = search.charAt(0).toUpperCase() + search.slice(1);
+        const str = search.toLowerCase();
+        let getData = cardsData.filter((data) => {
+          return (
+            data.prodName.toLowerCase().match(str) ||
+            data.prodCategory.toLowerCase().match(str)
+          );
+        });
+        setCardsData(getData);
+      } else if (search.length == 0) {
+        setCardsData(cardsData);
+      }
+    };
 
-    // SearchData();
+    SearchData();
     loadData();
   }, []);
 
@@ -96,8 +96,10 @@ export default function PopularProducts() {
 
         <h1>Popular Products
         </h1>
-      
-        <Searchbar />
+        <div className="searchbar">
+          <Searchbar />
+
+        </div>
         
         <div className="popular-carousel">
           {cardsData &&

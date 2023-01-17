@@ -12,6 +12,10 @@
     /* border: 1px solid; */
 }
 
+.searchbar {
+    margin: 0 auto;
+}
+
 .popular-section h1 {
     text-align: center;
     margin: 16px;

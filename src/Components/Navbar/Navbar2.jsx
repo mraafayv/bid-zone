@@ -195,7 +195,7 @@ function Navbar2() {
                   aria-label="show 17 new notifications"
                   color="inherit"
                 >
-                  <Badge badgeContent={1} color="error">
+                  <Badge badgeContent={1} color="error" onClick={() => navigate('/notification')}>
                     <NotificationsIcon />
                   </Badge>
                 </IconButton>

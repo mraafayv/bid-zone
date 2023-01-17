@@ -244,7 +244,7 @@ const Profile = () => {
             {/* Accounts detail card */}
 
             {/* change password */}
-            {blockOption === null && <h3>this is my head</h3>}
+            {/* {blockOption === null && <h3>No data Available</h3>} */}
             {blockOption === "changePassword" && (
               <div className={styles.card_form}>
                 <div className={styles.card_password}>
