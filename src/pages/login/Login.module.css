@@ -1,6 +1,6 @@
 .box {
   position: relative;
-  width: 380px;
+  /* max-width: 1200px; */
   background: #1c1c1c;
   border-radius: 8px;
 }
@@ -25,12 +25,13 @@ form h2 {
 }
 .inputbox {
   position: relative;
-  width: 300px;
+   width: 300px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.inputbox input , .inputbox textarea {
+.inputbox input,
+.inputbox textarea {
   position: relative;
   width: 100%;
   padding: 20px 10px 10px;
@@ -38,7 +39,7 @@ form h2 {
   outline: none;
   color: #1c1c1c;
   font-size: 1em;
-  
+
   letter-spacing: 0.05em;
   border: none;
   background: #45f3ff;
@@ -78,24 +79,39 @@ form p {
   background: #45f3ff;
   transition: 0.5s;
   box-shadow: #45f3ff 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  
 }
 .link {
   color: #45f3ff;
 }
-.detail{
+.detail {
   display: flex;
   gap: 5px;
 }
 a {
   text-decoration: none;
 }
-.inputbox select , .inputbox select option:checked{
-  padding:  10px 10px;
+.inputbox select,
+.inputbox select option:checked {
+  padding: 10px 10px;
   background: #45f3ff;
   color: #1c1c1c;
   border-radius: 4px;
   outline: none;
   font-weight: 700;
 }
-
+.blockInput{
+  display: inline-block;
+}
+@media only screen and (max-width: 380px) {
+  .box {
+    font-size: 0.9em;
+  }
+  .inputbox {
+    position: relative;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: inherit;
+  }
+}

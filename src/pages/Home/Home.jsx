@@ -3,7 +3,9 @@ import Categories from "../../Components/Categories/Categories"
 
 import PopularProducts from "../../Components/PopularProducts/PopularProducts";
 import HomeContent from "../../Components/HomeContent/HomeContent";
-import Navbar from "../../Components/Navbar/Navbar";
+// import Navbar from "../../Components/Navbar/Navbar";
+ import Navbar2 from "../../Components/Navbar/Navbar2";
+
 import { useAuth } from "../../hooks/useAuth";
 
 export default function Home() {
@@ -21,7 +23,7 @@ export default function Home() {
     <div className="homepage">
      
         <>
-          <Navbar />
+          <Navbar2 />
           <HomeContent />
           <Categories />
           <PopularProducts />
