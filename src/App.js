@@ -11,9 +11,9 @@ import Auction from "./pages/auction/Auction";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import Notification from "./pages/notification/NotificationIcon";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
-import AuctionCategory from "./pages/AunctionCategory/AuctionCategory";
-import PD from "./pages/ProductDetails/PD";
-import Notify from "./pages/notification/Notify";
+import AuctionCategory from "./pages/AuctionCategory/AuctionCategory";
+// import PD from "./pages/ProductDetails/PD";
+// import Notify from "./pages/notification/Notify";
 import PR from "./Components/PR/PR";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/auction" element={<Auction />} />
           <Route path="/addProduct" element={<PR Component={AddProduct} />} />
-          <Route path="/notification" element={<Notify />} />
+          <Route path="/notification" element={<Notification />} />
           <Route
             path="/productDetails/:id"
             element={<ProductDetails />}

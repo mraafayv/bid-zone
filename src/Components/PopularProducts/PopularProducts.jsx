@@ -62,12 +62,28 @@ export default function PopularProducts() {
         limit(8)
       );
       const documentSnapshots = await getDocs(first);
+<<<<<<< HEAD
+      documentSnapshots.forEach((doc)=>{
+
+        tempCards.push(doc.data())
+        // console.log(doc.data())
+      })
+      // const querySnapshot = await getDocs(collection(db, "products"));
+      // const tempCards = [];
+      // querySnapshot.forEach((doc) => {
+      //   tempCards.push(doc.data());
+      // });
+      setCardsData(tempCards);
+      // console.log("cardsData", tempCards)
+
+=======
       documentSnapshots.forEach((doc) => {
         tempCards.push(doc.data());
         console.log(doc.data());
       });
       setCardsData(tempCards);
       console.log("cardsData", tempCards);
+>>>>>>> 4b83e9b5c706279e870dcdaa57cbf35a976eae8d
     };
     // const SearchData = () => {
     //   if (search.length > 0) {
@@ -85,8 +101,11 @@ export default function PopularProducts() {
     //   }
     // };
 
+<<<<<<< HEAD
+=======
     // SearchData();
     loadData();
+>>>>>>> 4b83e9b5c706279e870dcdaa57cbf35a976eae8d
   }, []);
 
   return (
