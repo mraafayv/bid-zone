@@ -14,6 +14,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   updateDoc,
   doc,
   arrayUnion,
@@ -31,6 +32,9 @@ export default function ProductDetails() {
   const [document, setDocument] = useState(null);
   const [expired, setExpired] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [seller, setSeller] = useState(null);
+  const [DocID, setDocID] = useState("");
+  // var documentID = ''
 
   const q = query(collection(db, "products"), where("prodID", "==", id));
 
@@ -59,55 +63,116 @@ export default function ProductDetails() {
     }
   }
 
+  
+
   async function placeBid() {
     if (bidAmount < Number(product.basePrice)) {
       console.log(bidAmount);
       // console.log("Can't place a bid on amount lesser than the base price")
     } else {
+      console.log("DocID",DocID)
       const docRef = doc(db, "products", document._key.path.segments[6]);
-      // console.log("Doc Ref: ",docRef)
 
+      // console.log("Doc Ref: ",docRef)
+      await updateDoc(docRef, {
+        subscribers: arrayUnion(localUser.uid),
+      });
       if (bidAmount > Number(product.currentBid)) {
         await updateDoc(docRef, {
           currentBid: bidAmount,
-          subscribers: arrayUnion(localUser.uid),
+          highestBidder: { userID: localUser.uid, name: localUser.displayName },
+          // subscribers: arrayUnion(localUser.uid),
         });
       }
+      notifySeller().catch((err) => {
+       
+        console.log(err.message);
+      });;
     }
-    setTimeout(window.location.reload(), 3000);
+    setTimeout(window.location.reload(), 5000);
   }
+
+
+
+  useEffect(() => {
+
+    // console.log("product.ownerID", product.ownerID)
+    console.log("Product", product)
+    
+    async function getSellerProfile() {
+      // console.log("hello")
+      const sellerProf = collection(db, "userInformation");
+
+      const q2 = query(sellerProf, where("uid", "==", product.ownerID));
+      // Create a query against the collection.
+      const snapshot = await getDocs(q2);
+      snapshot.forEach((doc) => {
+        // updateDoc(doc.)
+        setSeller(doc.data());
+        setDocID(doc.id);
+        // documentID = doc.id;
+        // console.log("Owner ID",doc.data().uid)
+        console.log("DocID",doc.id)
+      });
+
+    }
+       getSellerProfile().catch((err) => {
+        setIsPending(false);
+        setError(true);
+        console.log(err.message);
+      });
+
+
+  }, [product, doc, DocID])
+
   useEffect(() => {
     setIsPending(true);
+    
 
     async function getProductDetails() {
       const querySnapshot = await getDocs(q);
-
+      
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
         setDocument(doc);
         setProduct(doc.data());
-        checkExpiryOfTimer();
+        // checkExpiryOfTimer();
         setIsPending(false);
+        setError(false);
         // console.log(doc.id, " => ", doc.data());
       });
     }
     getProductDetails().catch((err) => {
+      setIsPending(false);
       setError(true);
       console.log(err.message);
     });
 
-    // if (error) {
-    //     console.log(error)
-    // //   setTimeout(() => navigate("/"), 2000);
-    // }
-    // checkExpiryOfTimer();
-  }, [error, navigate, id, doc]);
+    
+  }, [navigate, id, doc, DocID]);
 
   const checkExpiryOfTimer = (distance) => {
     if (distance < 0) {
       setExpired(true);
     }
   };
+
+
+  async function notifySeller() {
+    const message = `You have a new bid from ${localUser.displayName}`;
+
+    console.log("DocID", DocID);
+    // console.log("seller", seller);
+
+    const sellerRef = doc(db, "userInformation", DocID);
+    console.log("seller ref", sellerRef)
+
+    await updateDoc(sellerRef, {
+      notification: arrayUnion(message),
+    });
+    console.log("User Notified!");
+  }
+
 
   let errorClass = lesserAmount ? "error-field" : "";
 
@@ -116,6 +181,8 @@ export default function ProductDetails() {
       <Navbar />
 
       <div className="product-details-page">
+        {/* {console.log("DocID", DocID)}
+        {console.log("seller", seller)} */}
         {error && <p className={`error`}>Could not fetch data</p>}
         {isPending && <p className={`loading`}>Loading...</p>}
         {product && (

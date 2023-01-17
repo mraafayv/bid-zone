@@ -1,5 +1,17 @@
 import "./Timer.css";
 import { useEffect, useState } from "react";
+import { getDatabase, ref, set } from "firebase/database";
+import {
+  collection,
+  doc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  arrayUnion,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 export default function Timer({ data, checkExpiryOfTimer }) {
   const [days, setDays] = useState(0);
@@ -7,7 +19,63 @@ export default function Timer({ data, checkExpiryOfTimer }) {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [expired, setExpired] = useState(false);
-  // let [creationTime, setCreationTime] = useState(new Date())
+  const [documentIDArray, setDocumentIDArray] = useState([]);
+
+ 
+  useEffect(() => {
+    async function notifyBidders() {
+      let message = `${data.highestBidder.name.toUpperCase()} has won the auction for ${data.prodName} by placing a bid of Rs. ${data.currentBid}`;
+
+      if (documentIDArray) {
+        console.log("documentIDArray",documentIDArray)
+        documentIDArray.forEach(async (docID) => {
+          let docRef = doc(db, "userInformation", docID);
+
+          let docSnap = await getDoc(docRef);
+
+          if(docSnap.uid === data.highestBidder.uid){
+            message = `Congratulations! you have won the auction for ${data.prodName}`
+          } 
+          await updateDoc(docRef, {
+            notification: arrayUnion(message)
+          })
+        });
+      }
+
+
+      
+    }
+    
+
+    if(expired){
+      notifyBidders();
+    }
+  }, [expired]);
+
+  useEffect(() => {
+    // let tempArr = []
+    async function getSubscribers() {
+      data.subscribers.forEach((subscriber) => {
+        const q = query(
+          collection(db, "userInformation"),
+          where("uid", "==", subscriber)
+        );
+        async function getSubscriberDoc() {
+          const snapshot = await getDocs(q);
+          snapshot.forEach((doc) => {
+            console.log("doc.id",doc.id)
+            // setDocumentIDArray([...documentIDArray, doc.id]);
+            setDocumentIDArray(documentIDArray => documentIDArray.concat(doc.id));
+            // console.log("subscriber ID", doc.id);
+          });
+        }
+        getSubscriberDoc();
+      });
+    }
+
+    getSubscribers();
+    // getSubscriberDoc()
+  }, [doc]);
 
   useEffect(() => {
     // console.log("data.duration: ",data.duration)
@@ -31,15 +99,15 @@ export default function Timer({ data, checkExpiryOfTimer }) {
       // If the count down is finished, write some text
       if (distance < 0) {
         setExpired(true);
-        checkExpiryOfTimer(distance);
+        // checkExpiryOfTimer(distance);
         clearInterval(x);
-        // document.querySelector("#timer").innerHTML = "This Auction is no longer Available";
       }
     }, 1000);
   }, []);
 
   return (
     <div className="timer" id="timer">
+      {/* {console.log("data in timer", data)} */}
       {expired ? (
         <div className="expired">This Auction is No Longer Available</div>
       ) : (

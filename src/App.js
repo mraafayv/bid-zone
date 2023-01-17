@@ -10,9 +10,9 @@ import About from "./pages/about/About";
 import Profile from "./pages/profile/Profile";
 import Auction from "./pages/auction/Auction";
 import AddProduct from './pages/AddProduct/AddProduct'
-import Notification from "./pages/notification/notification";
+import Notification from "./pages/notification/Notification";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
-import AuctionCategory from "./pages/AunctionCategory/AuctionCategory";
+import AuctionCategory from "./pages/AuctionCategory/AuctionCategory";
 
 
 function App() {

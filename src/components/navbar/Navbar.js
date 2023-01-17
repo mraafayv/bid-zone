@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
@@ -62,6 +62,14 @@ const Navbar = () => {
               <li className={styles.navbar_name}>
                 <p>{localUser.displayName}</p>
               </li>
+
+              <Link to="/notification">
+                <li className={styles.notifications}>
+                  <i class="fa-solid fa-bell">
+                    <span className={styles.chip}></span>
+                  </i>
+                </li>
+              </Link>
 
               <li
                 className={styles.menu_list_item_img}

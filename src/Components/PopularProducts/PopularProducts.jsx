@@ -56,7 +56,7 @@ export default function PopularProducts() {
       documentSnapshots.forEach((doc)=>{
 
         tempCards.push(doc.data())
-        console.log(doc.data())
+        // console.log(doc.data())
       })
       // const querySnapshot = await getDocs(collection(db, "products"));
       // const tempCards = [];
@@ -64,13 +64,13 @@ export default function PopularProducts() {
       //   tempCards.push(doc.data());
       // });
       setCardsData(tempCards);
-    console.log("cardsData", tempCards)
+      // console.log("cardsData", tempCards)
 
     };
     loadData();
    
 
-  }, [cardsData]);
+  }, []);
 
   return (
     <div className="popular-products-container">
