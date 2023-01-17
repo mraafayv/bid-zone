@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../../Components/Card/Card";
-
+import Loader from "../../Components/Loader/Loader"
+import { getDatabase, ref as realtimeRef, child, get } from "firebase/database";
 import {
   ref,
   uploadBytes,
@@ -19,58 +20,14 @@ import {
   signOut,
 } from "firebase/auth";
 import Slider from "react-slick";
-
+import Navbar2 from "../../Components/Navbar/Navbar2";
 // import styles from "./Profile.module.css";
 import styles from "./Profile.module.css";
 import { db, signInWithEmailAndPassword } from "../../firebase/config";
 import { useAuth } from "../../hooks/useAuth";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
-    );
-  }
-
-  function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "black" }}
-        onClick={onClick}
-      />
-    );
-  }
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    
-    // beforeChange: function(currentSlide, nextSlide) {
-    //   console.log("before change", currentSlide, nextSlide);
-    // },
-    // afterChange: function(currentSlide) {
-    //   console.log("after change", currentSlide);
-    // },
-    
-  };
   const auth = getAuth();
   const storage = getStorage();
   const navigate = useNavigate();
@@ -83,32 +40,40 @@ const Profile = () => {
   const [authUser, setAuthUser] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [password, setPassword] = useState();
+  const [newPassword, setNewPassword] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+
   const [blockOption, setBlockOption] = useState(null);
+
   const [data, setData] = useState({
     password: "",
   });
   console.log();
+  //my work
+
+  //end mywork
   useEffect(() => {
     if (localUser) {
       setId(localUser.uid);
       getProfile(localUser.uid);
       setAuthUser(localUser);
-      showUserProduct(localUser.uid);
+      const getblockID = localStorage.getItem("blockState");
+
+      if (getblockID) {
+        console.log("getblockID", JSON.parse(getblockID));
+        setBlockOption(JSON.parse(getblockID));
+      }
     }
   }, [localUser]);
-  const handleEvent = (e) => {
-    let inputs = { [e.target.name]: e.target.value };
-    setData({ ...data, ...inputs });
-  };
+
   const changePasswordBlock = (e) => {
     const id = e.target.getAttribute("id");
     console.log("id", id);
     if (id === "changePassword") {
+      localStorage.setItem("blockState", JSON.stringify(id));
       setBlockOption("changePassword");
-    } else if (id === "auctions") {
-      setBlockOption("auctions");
     } else if (id === "profileDetails") {
+      localStorage.setItem("blockState", JSON.stringify(id));
       setBlockOption("profileDetails");
     }
   };
@@ -169,17 +134,17 @@ const Profile = () => {
   const updateData = async (e) => {
     e.preventDefault();
     if (authUser) {
-      console.log(getUser.password);
+      console.log(getUser.oldPassword);
       const credential = EmailAuthProvider.credential(
         auth.currentUser.email,
-        getUser.password
+        oldPassword
       );
       console.log(credential);
       reauthenticateWithCredential(auth.currentUser, credential)
         .then(() => {
           // User re-authenticated.
           alert("User re-authenticated");
-          updatePassword(auth.currentUser, password)
+          updatePassword(auth.currentUser, newPassword)
             .then(() => {
               alert("password updated successfully");
               const res = getDocs(collection(db, "userInformation")).then(
@@ -192,7 +157,7 @@ const Profile = () => {
                         userDoc._key.path.segments[6]
                       );
                       const imageRes = await updateDoc(washingtonRef, {
-                        password: password,
+                        password: newPassword,
                       });
                       console.log("imageRes", imageRes);
                     }
@@ -229,23 +194,10 @@ const Profile = () => {
         setGetUser(doc.data());
         // data.username = doc.data().displayName;
         // data.email = doc.data().email;
-        setData(doc.data().password);
+        setData(doc.data().newPassword);
         setUrl(doc.data().url);
       }
     });
-  };
-  const showUserProduct = async (id) => {
-    const tempCards = [];
-
-    const querySnapshot = await getDocs(collection(db, "products"));
-    querySnapshot.forEach((doc) => {
-      if (doc.data().ownerID === id) {
-        tempCards.push(doc.data());
-      }
-    });
-    setFilteredProducts(tempCards);
-
-    console.log("filteredData", filteredProducts);
   };
 
   return (
@@ -253,36 +205,37 @@ const Profile = () => {
       {getUser && (
         <>
           {/* --- header start --- */}
-
+          <div className={styles.card_main}>
+          <Navbar2 />
           <div className={styles.card_container}>
+          
             <div className={styles.card}>
               <div className={styles.card_header}>Profile Picture</div>
               <div className={styles.card_body}>
                 <img className={styles.img_account_profile} src={url} alt="" />
 
-                <div className={styles.card_text}>{getUser.displayName}</div>
-                <input
-                  type="file"
-                  onChange={(e) => setImageFile(e.target.files[0])}
-                  name="file"
-                />
-                <p>{percent !== null ? `${percent}% done` : ""} </p>
+                {/* <div className={styles.card_text}>
+                  {getUser.displayName} {getUser.userType}
+                </div> */}
+                <div className={styles.pic_detail}>
+                  <input
+                    type="file"
+                    onChange={(e) => setImageFile(e.target.files[0])}
+                    name="file"
+                  />
+                  <p>{percent !== null ? `${percent}% done` : ""} </p>
 
-                <button onClick={uploadImage}>upload</button>
+                  <button onClick={uploadImage}>upload</button>
+                </div>
               </div>
               <ul className={styles.profile_menu}>
                 <li>
-                  <button onClick={changePasswordBlock} id="changePassword">
+                  <button onClick={changePasswordBlock} id="changePassword" className={styles.update_btn}>
                     Change Password
                   </button>
                 </li>
                 <li>
-                  <button onClick={changePasswordBlock} id="auctions">
-                    My Auctions
-                  </button>
-                </li>
-                <li>
-                  <button onClick={changePasswordBlock} id="profileDetails">
+                  <button onClick={changePasswordBlock} id="profileDetails" className={styles.update_btn}>
                     Details
                   </button>
                 </li>
@@ -294,16 +247,27 @@ const Profile = () => {
             {blockOption === null && <h3>this is my head</h3>}
             {blockOption === "changePassword" && (
               <div className={styles.card_form}>
-                <div className={styles.card}>
+                <div className={styles.card_password}>
                   <div class={styles.card_header}>Account Details</div>
                   <div className={styles.card_body}>
                     <form>
                       <div className={styles.inputbox}>
-                        <span>Password</span>
+                        <span>Old Password</span>
                         <input
-                          type="text"
-                          onChange={(e) => setPassword(e.target.value)}
-                          defaultValue={getUser.password}
+                          type="password"
+                          onChange={(e) => setOldPassword(e.target.value)}
+                          // defaultValue={getUser.password}
+                          value={oldPassword}
+                          name="password"
+                        />
+                      </div>
+                      <div className={styles.inputbox}>
+                        <span>New Password</span>
+                        <input
+                          type="password"
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          //  defaultValue={getUser.password}
+                          value={newPassword}
                           name="password"
                         />
                       </div>
@@ -320,22 +284,47 @@ const Profile = () => {
             )}
 
             {/* auctions */}
-            <div className={styles.auctions_card}>
-            {blockOption === "auctions" && (
-             
-             
-                filteredProducts &&
-                  filteredProducts.map((card, index) => {
-                    return <Card  key={index} data={card} />;
-                  })
-             
-                  
+
+            {blockOption === "profileDetails" && (
+              <div className={styles.profile_details}>
+                <h3>About Me</h3>
+                <h6>{getUser.userType}</h6>
+                <p className={styles.para}>
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Iste, nesciunt. Non perferendis dolore nobis hic sint
+                  assumenda, excepturi accusamus voluptates neque inventore quos
+                  esse cupiditate ipsum repudiandae nostrum quas doloribus.
+                </p>
+                <div className={styles.userInfo}>
+                  <div className={styles.bioData_head1}>
+                    <div className={styles.bioData_content}>
+                      <span>Name:</span>
+                      <p style={{textTransform:"capitalize"}}>{getUser.displayName}</p>
+                    </div>
+                    <div className={styles.bioData_content}>
+                      <span>Your role:</span>
+                      <p>{getUser.userType}</p>
+                    </div>
+                  </div>
+                  <div className={styles.bioData_head2}>
+                    <div className={styles.bioData_content}>
+                      <span>Gender:</span>
+                      <p>Female</p>
+                    </div>
+
+                    <div className={styles.bioData_content}>
+                      <span>Email:</span>
+                      <p>{getUser.email}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
-            </div>
+          </div>
           </div>
         </>
       )}
-      {!getUser && <h1>Loading.....</h1>}
+      {!getUser && <Loader />  }
     </>
   );
 };

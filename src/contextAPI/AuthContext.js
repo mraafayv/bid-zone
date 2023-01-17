@@ -14,11 +14,13 @@ const ContextProvier = ({ children }) => {
 const auth = getAuth();
 const user = auth.currentUser;
   const [localUser, setLocalUser] = useState(null);
+  const [search, setSearch] = useState("");
+  
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       // console.log(auth)
       if (user) {
-        console.log("authUser" , user)
+        // console.log("authUser" , user)
         setLocalUser(user);
       } else {
         console.log("not logged in")
@@ -28,7 +30,7 @@ const user = auth.currentUser;
   }, [localUser]);
 
   return (
-    <AuthContext.Provider value={{ localUser, setLocalUser }}>
+    <AuthContext.Provider value={{ localUser, setLocalUser , search, setSearch }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,3 +1,4 @@
+
 import "./Timer.css";
 import { useEffect, useState } from "react";
 import { getDatabase, ref, set } from "firebase/database";
@@ -14,10 +15,13 @@ import {
 import { db } from "../../firebase/config";
 
 export default function Timer({ data, checkExpiryOfTimer }) {
+
+
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
+
   const [expired, setExpired] = useState(false);
   const [documentIDArray, setDocumentIDArray] = useState([]);
 
@@ -78,6 +82,7 @@ export default function Timer({ data, checkExpiryOfTimer }) {
   }, [doc]);
 
   useEffect(() => {
+    
     // console.log("data.duration: ",data.duration)
     var countDownDate = data.duration.seconds * 1000;
 
@@ -88,6 +93,7 @@ export default function Timer({ data, checkExpiryOfTimer }) {
       // Find the distance between now and the count down date
       var distance = countDownDate - now;
 
+
       // Time calculations for days, hours, minutes and seconds
       setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
       setHours(
@@ -96,9 +102,9 @@ export default function Timer({ data, checkExpiryOfTimer }) {
       setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
       setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
 
-      // If the count down is finished, write some text
       if (distance < 0) {
         setExpired(true);
+        // checkExpiryOfTimer(distance);
         // checkExpiryOfTimer(distance);
         clearInterval(x);
       }

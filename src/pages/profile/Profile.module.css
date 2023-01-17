@@ -1,18 +1,37 @@
+.card_main{
+  background-color: #f2f6fc;
+}
 .card_container {
   display: flex;
   /* justify-content: space-around; */
   width: 100%;
   background-color: #f2f6fc;
   color: #69707a;
-  padding: 20px 20px;
+  padding: 50px 200px;
+  gap: 60px;
+  height: 100vh;
+  margin-top: 73px;
 }
 .card {
   box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 460.67px;
+  gap: 20px;
 }
-
+.card_password {
+  box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: inherit;
+}
 .card ul {
   list-style: none;
-  margin-top: 30px;
   font-size: 1rem;
   text-align: center;
 }
@@ -40,8 +59,12 @@
   background-color: rgba(33, 40, 50, 0.03);
   border-bottom: 1px solid rgba(33, 40, 50, 0.125);
 }
-.card_form {
-  max-width: 70%;
+.card_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 .card_body form {
   display: flex;
@@ -49,6 +72,24 @@
   align-items: flex-start;
   padding: 50px 40px;
   gap: 20px;
+}
+.profile_details h3{
+ color: #3D85C6; 
+}
+.profile_details p{
+  color: #1c1c1c;
+}
+.profile_details h6{
+font-size: 23px;
+}
+.profile_menu{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.bioData_content p{
+  color: blue;
 }
 .profile_menu button {
   cursor: pointer;
@@ -88,20 +129,107 @@
   outline: none;
   padding: 11px 25px;
   display: flex;
-  background: transparent;
-  color: #45f3ff;
-  border: 2px solid #45f3ff;
+  background: #3D85C6;
+  color: #f2f6fc;
+  border: 2px solid #f2f6fc;
   border-radius: 4px;
   font-size: 1em;
   letter-spacing: 0.03em;
   font-weight: 600;
 }
 .update_btn:hover {
-  color: #1c1c1c;
-  background: #45f3ff;
+  color: #f2f6fc;
+  background: #3D85C6;
   transition: 0.5s;
-  box-shadow: #45f3ff 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  box-shadow: #3D85C6 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-.auctions_card{
-  
+.profile_details,
+.card_form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 70%;
+  gap: 20px;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+}
+.pic_detail {
+  display: flex;
+  justify-content: center;
+}
+.para {
+  max-width: 60%;
+}
+.bioData_head1 {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 140px;
+}
+.bioData_head2 {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 110px;
+}
+.bioData_content {
+  display: flex;
+  gap: 10px;
+}
+@media screen and (max-width: 1200px) {
+  .card_container {
+    padding: 20px 20px;
+  }
+}
+@media screen and (max-width: 1064px) {
+  .card_container {
+    padding: 20px 20px;
+  }
+}
+@media screen and (max-width: 906px) {
+  .inputbox {
+    max-width: 300px;
+    width: inherit;
+  }
+
+  .pic_detail {
+    display: flex;
+    justify-content: center;
+    max-width: 300px;
+  }
+}
+@media screen and (max-width: 875px) {
+  .card_container {
+    flex-direction: column;
+    height: auto;
+  }
+  .card {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .card_form {
+    margin: 0 auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+    width: auto;
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 660px) {
+  .pic_detail{
+    flex-direction: column;
+    max-width: 200px;
+  }
+}
+@media screen and (max-width: 660px) {
+  .card{
+    width: 100%;
+  }
+  .card_form{
+    width: 100%;
+  }
 }

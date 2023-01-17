@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-
+import NotificationIcon from "../../pages/notification/NotificationIcon";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
-
+import Searchbar from "../Searchbar/Searchbar";
 const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -17,8 +17,6 @@ const Navbar = () => {
   useEffect(() => {
     if (user) {
       console.log("run", user.displayName);
-
-      // console.log("run", localUser.displayName);
     }
   }, [localUser]);
   const handleClick = () => {
@@ -62,6 +60,7 @@ const Navbar = () => {
               <li className={styles.navbar_name}>
                 <p>{localUser.displayName}</p>
               </li>
+<<<<<<< HEAD
 
               <Link to="/notification">
                 <li className={styles.notifications}>
@@ -71,6 +70,11 @@ const Navbar = () => {
                 </li>
               </Link>
 
+=======
+              <li className={styles.navbar_name}>
+                <NotificationIcon />
+              </li>
+>>>>>>> 4b83e9b5c706279e870dcdaa57cbf35a976eae8d
               <li
                 className={styles.menu_list_item_img}
                 onMouseOver={() => setIsHovering(true)}
@@ -118,6 +122,9 @@ const Navbar = () => {
             <ul
               className={isClick ? styles.menu_list_active : styles.menu_list}
             >
+              <li>
+                <Searchbar />
+              </li>
               <li className={styles.active}>
                 <Link to="/"> Home </Link>
               </li>

@@ -6,21 +6,18 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 const Login = () => {
-  const {localUser} = useAuth();
-  console.log(localUser)
+  const { localUser } = useAuth();
+  // console.log(localUser)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signin, error, isPending } = useSignin();
   const navigate = useNavigate();
 
-  
-useEffect(() => {
- if(localUser)
- {
-  navigate("/")
- }
- 
-}, [localUser])
+  useEffect(() => {
+    if (localUser) {
+      navigate("/");
+    }
+  }, [localUser]);
 
   const handleSignin = (e) => {
     e.preventDefault();

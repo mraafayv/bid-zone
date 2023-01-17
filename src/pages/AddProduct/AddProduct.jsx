@@ -109,7 +109,24 @@ export default function AddProduct() {
 
     //  await uploadImage();
 
+<<<<<<< HEAD
     
+=======
+    const docRef = addDoc(collection(db, "products"), {
+      ownerID: localUser.uid,
+      prodID: uuid(),
+      prodName: prodName,
+      prodDescription: prodDescription,
+      prodCategory: prodCategory,
+      basePrice: basePrice,
+      prodImage: url,
+      createdAt: new Date(),
+      currentBid:"",
+      duration: new Date(duration),
+    });
+    console.log("Document written successfully");
+    console.log("docRef", docRef);
+>>>>>>> 4b83e9b5c706279e870dcdaa57cbf35a976eae8d
 
   };
 

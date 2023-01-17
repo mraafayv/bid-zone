@@ -6,7 +6,10 @@ nav {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 9vh;
   background: #23242a;
-  position: relative;
+  width: 100%;
+  /* position: relative; */
+  position: fixed;
+
 }
 .logo h2 {
   position: relative;
@@ -211,4 +214,24 @@ nav {
     background: #1c1c1c;
     padding: 40px 0 0 10px;
   }
+}
+.bell_notification {
+  position: relative;
+  color: black;
+  cursor: pointer;
+}
+.bell_notification::after {
+  content: attr(current-count);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: -3px;
+  right: -7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border: 2px solid #23242a;
 }

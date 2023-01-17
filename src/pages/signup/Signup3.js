@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+
 // import { useSignup2 } from "../../hooks/useSignup2";
 import { useNavigate } from "react-router-dom";
-import styles from "../login/Login.module.css";
+import styles from "./Signup.module.css";
 import {
   getAuth,
   signOut,
@@ -22,7 +24,15 @@ import {
 } from "firebase/storage";
 const SignUp3 = () => {
   const [percent, setPercent] = useState(null);
+  const {localUser} = useAuth();
 
+  useEffect(() => {
+    if(localUser)
+    {
+     navigate("/")
+    }
+    
+   }, [localUser])
   const { addDocument } = useFireStore("userInformation");
   const auth = getAuth();
   const user = auth.currentUser;
@@ -31,19 +41,24 @@ const SignUp3 = () => {
     username: "",
     email: "",
     password: "",
-    userDetail:"",
-    userType: "Seller",
-
+    userDetail: "",
   });
+  const [userType, setUserType] = useState("Seller");
   const [imageFile, setImageFile] = useState(null);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
   const [url, setUrl] = useState("");
   const storage = getStorage();
   const listRef = ref(storage, "images");
 
   const handleEvent = (e) => {
-    let inputs = { [e.target.name]: e.target.value };
-    setData({ ...data, ...inputs });
+  
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+
+    // let inputs = { [e.target.name]: e.target.value };
+    // setData({ ...data, });
   };
   const uploadImage = async (e) => {
     e.preventDefault();
@@ -51,7 +66,7 @@ const SignUp3 = () => {
     // const res = await listAll(listRef);
     const storageRef = ref(storage, `images/profileImages/${imageFile.name}`);
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
-   uploadTask.on(
+    uploadTask.on(
       "state_changed",
       (snapshot) => {
         const percent = Math.round(
@@ -92,9 +107,10 @@ const SignUp3 = () => {
         email: data.email,
         password: data.password,
         displayName: data.username,
-        userDetail:data.userDetail,
-        userType: data.userType,
+        userDetail: data.userDetail,
+        userType: userType,
         url,
+        notification: [],
       });
       updateProfile(auth.currentUser, {
         displayName: data.username,
@@ -106,20 +122,19 @@ const SignUp3 = () => {
         })
         .catch((error) => {
           console.log("updatednot", error);
-          
         });
 
       setData({
         username: "",
         email: "",
         password: "",
-        userDetail:"",
-        userType: "Seller",
+        userDetail: "",
       });
+      setUserType("");
       setUrl("");
     } catch (error) {
       console.log(error.message);
-      setError(error.message)
+      setError(error.message);
     }
   };
 
@@ -129,63 +144,72 @@ const SignUp3 = () => {
         <div className={styles.form}>
           <form>
             <h2>Sign Up</h2>
-            <div className={styles.inputbox}>
-              <span>Your Role</span>
-              <select
-                name="usertype"
-                value={data.userType}
-                required
-                onChange={handleEvent}
-              >
-                <option value="Seller">I am Seller</option>
-                <option value="Bidder">I am Bidder</option>
-              </select>
+            <div className={styles.blockInput}>
+              <div className={styles.inputbox}>
+                <span>Your Role</span>
+                <select
+                  name="usertype"
+                  value={userType}
+                  onChange={(e) => setUserType(e.target.value)}
+                >
+                  <option value="Seller">I am Seller</option>
+                  <option value="Bidder">I am Bidder</option>
+                </select>
+              </div>
+              <div className={styles.fileBox}>
+                <span>upload picture</span>
+                <div>
+                <input
+                className={styles.fileInput}
+                  type="file"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                  name="file"
+                  accept="image/png, image/jpg, image/jpeg"
+                />
+                <button onClick={uploadImage}>upload</button> 
+                </div>
+                <p>{percent !== null ? `${percent}% done` : ""} </p>
+              </div>
             </div>
-            <div className={styles.inputbox}>
-              <span>upload picture</span>
-              <input
-                type="file"
-                onChange={(e) => setImageFile(e.target.files[0])}
-                name="file"
-              />
-              <button onClick={uploadImage}>upload</button> 
-              <p>{percent !== null ? `${percent}% done` : ""} </p>
+            <div className={styles.blockInput}>
+              <div className={styles.inputbox}>
+                <span>Username</span>
+                <input
+                  type="text"
+                  onChange={handleEvent}
+                  value={data.username}
+                  name="username"
+                />
+              </div>
+              <div className={styles.inputbox}>
+                <span>Your Details</span>
+                <input
+                  type="text"
+                  onChange={handleEvent}
+                  value={data.userDetail}
+                  name="userDetail"
+                />
+              </div>
             </div>
-            <div className={styles.inputbox}>
-              <span>Username</span>
-              <input
-                type="text"
-                onChange={handleEvent}
-                value={data.username}
-                name="username"
-              />
-            </div>
-            <div className={styles.inputbox}>
-              <span>Your Details</span>
-              <input
-                type="text"
-                onChange={handleEvent}
-                value={data.userDetail}
-                name="userDetail"
-              />
-            </div>
-            <div className={styles.inputbox}>
-              <span>Email</span>
-              <input
-                type="email"
-                onChange={handleEvent}
-                value={data.email}
-                name="email"
-              />
-            </div>
-            <div className={styles.inputbox}>
-              <span>Password</span>
-              <input
-                type="password"
-                onChange={handleEvent}
-                value={data.password}
-                name="password"
-              />
+            <div className={styles.blockInput}>
+              <div className={styles.inputbox}>
+                <span>Email</span>
+                <input
+                  type="email"
+                  onChange={handleEvent}
+                  value={data.email}
+                  name="email"
+                />
+              </div>
+              <div className={styles.inputbox}>
+                <span>Password</span>
+                <input
+                  type="password"
+                  onChange={handleEvent}
+                  value={data.password}
+                  name="password"
+                />
+              </div>
             </div>
             <p className={styles.detail}>
               Already have an account?
@@ -193,13 +217,13 @@ const SignUp3 = () => {
                 <span className={styles.link}>login</span>
               </Link>
             </p>
-            {percent === 100 && <button onClick={handleSignup}>Sign Up</button>}
+            {percent === 100 && <button onClick={handleSignup} className={styles.login_btn}>Sign Up</button>}
             {percent !== 100 && (
-              <button onClick={handleSignup} disabled>
-                Sign Up
+              <button onClick={handleSignup} disabled className={styles.login_btn}>
+                Sign Up 
               </button>
             )}
-           
+
             {error && <p>{error}</p>}
           </form>
         </div>
